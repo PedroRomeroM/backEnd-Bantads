@@ -25,8 +25,8 @@ public class ClienteService {
                 .map(e -> modelMapperCliente.map(e, ClienteDto.class));
     }
 
-    public ClienteDto selectClienteById(Integer clientId) {
-        Cliente cliente = clienteRepository.findById(clientId)
+    public ClienteDto selectClienteById(Integer clientid) {
+        Cliente cliente = clienteRepository.findById(clientid)
                 .orElseThrow(() -> new EntityNotFoundException());
 
         return modelMapperCliente.map(cliente, ClienteDto.class);

@@ -4,20 +4,18 @@ import br.com.bantads.microClientes.dto.ClienteDto;
 import br.com.bantads.microClientes.service.ClienteService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
 @RestController
-@RequestMapping("/crudclientes")
+@RequestMapping("/clientes")
 public class ClienteCrudController {
 
     @Autowired
@@ -38,7 +36,7 @@ public class ClienteCrudController {
     @PostMapping
     public ResponseEntity<ClienteDto> cadastroCliente(@RequestBody @Valid ClienteDto dto, UriComponentsBuilder uriBuilder) {
         ClienteDto clienteDto = clienteService.createCliente(dto);
-        URI path = uriBuilder.path("/crudclientes/{id}").buildAndExpand(clienteDto.getClientId()).toUri();
+        URI path = uriBuilder.path("/clientes/{id}").buildAndExpand(clienteDto.getClientId()).toUri();
 
         return ResponseEntity.created(path).body(clienteDto);
     }
