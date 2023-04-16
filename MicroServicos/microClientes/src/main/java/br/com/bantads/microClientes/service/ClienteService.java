@@ -1,6 +1,7 @@
 package br.com.bantads.microClientes.service;
 
 import br.com.bantads.microClientes.repository.ClienteRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,5 +14,6 @@ public class ClienteService {
     @Autowired
     private ModelMapper modelMapperCliente;
 
+    
 
 }
