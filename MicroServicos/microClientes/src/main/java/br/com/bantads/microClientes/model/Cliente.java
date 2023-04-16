@@ -1,0 +1,57 @@
+package br.com.bantads.microClientes.model;
+
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Table(name="clientes")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class Cliente {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer clientId;
+
+    @NotBlank
+    @Size(max = 255)
+    private String nomeCliente;
+
+    @NotBlank
+    @Size(min = 11,max = 11)
+    private String cpfCliente;
+
+    @NotNull
+    @Positive
+    private float salarioCliente;
+
+    @NotNull
+    @Positive
+    private int idadeCliente;
+
+    @NotBlank
+    @Size(max = 255)
+    private String emailCliente;
+
+    @NotBlank
+    @Size(min = 8, max = 8)
+    private String cepCliente;
+
+    @NotNull
+    @Positive
+    private int numeroResidenciaCliente;
+
+    @NotBlank
+    @Size(max = 255)
+    private String complementoResidenciaCliente;
+}
