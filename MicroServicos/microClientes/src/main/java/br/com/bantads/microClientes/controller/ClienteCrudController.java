@@ -41,7 +41,7 @@ public class ClienteCrudController {
         return ResponseEntity.created(path).body(clienteDto);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<ClienteDto> updateCliente(@PathVariable @NotNull int id, @RequestBody @Valid ClienteDto dto) {
         ClienteDto updated = clienteService.updateCliente(id,dto);
 
