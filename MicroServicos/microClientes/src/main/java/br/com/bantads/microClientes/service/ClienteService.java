@@ -38,7 +38,7 @@ public class ClienteService {
 
         return modelMapperCliente.map(cliente, ClienteDto.class);
     }
-    public ClienteDto atualizarCliente(int clienteId, ClienteDto dto) {
+    public ClienteDto updateCliente(int clienteId, ClienteDto dto) {
         Cliente cliente = modelMapperCliente.map(dto, Cliente.class);
         cliente.setClientId(clienteId);
         cliente = clienteRepository.save(cliente);
