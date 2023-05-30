@@ -11,5 +11,4 @@ public class MicroClientesApplication {
 		SpringApplication.run(MicroClientesApplication.class, args);
 
 	}
-
 }

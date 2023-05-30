@@ -10,6 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ClienteService {
 
@@ -19,10 +22,21 @@ public class ClienteService {
     @Autowired
     private ModelMapper modelMapperCliente;
 
-    public Page<ClienteDto> selectAllClientes(Pageable page) {
+    public List<ClienteDto> selectAllClientes() {
         return clienteRepository
-                .findAll(page)
-                .map(e -> modelMapperCliente.map(e, ClienteDto.class));
+                .findAll()
+                .stream()
+                .map(e -> modelMapperCliente.map(e, ClienteDto.class))
+                .collect(Collectors.toList());
+    }
+
+    public ClienteDto selectClientByCpf (String cpf){
+        Cliente cliente = clienteRepository
+                .findByCpf(cpf)
+                .orElseThrow(() -> new EntityNotFoundException());
+
+        return modelMapperCliente.map(cliente, ClienteDto.class);
+
     }
 
     public ClienteDto selectClienteById(Integer clientid) {

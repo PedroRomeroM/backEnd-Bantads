@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/clientes")
@@ -22,8 +24,9 @@ public class ClienteCrudController {
     private ClienteService clienteService;
 
     @GetMapping
-    public Page<ClienteDto> listClientes (@PageableDefault(size = 10) Pageable paginacao) {
-        return clienteService.selectAllClientes(paginacao);
+    public ResponseEntity<List<ClienteDto>> listAll(){
+
+        return ResponseEntity.status(HttpStatus.OK).body(clienteService.selectAllClientes());
     }
 
     @GetMapping("/{id}")
