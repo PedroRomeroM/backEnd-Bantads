@@ -2,7 +2,7 @@ CREATE TABLE clientes (
     client_id SERIAL,
     nome_cliente VARCHAR(255) NOT NULL,
     email_cliente VARCHAR(255) NOT NULL,
-    cpf_cliente VARCHAR(11) NOT NULL,
+    cpf_cliente VARCHAR(11) UNIQUE NOT NULL,
     telefone_cliente VARCHAR(20) NOT NULL,
     salario_cliente FLOAT NOT NULL,
 
