@@ -19,6 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/clientes")
+@CrossOrigin
 public class ClienteCrudController {
 
     @Autowired
@@ -29,7 +30,7 @@ public class ClienteCrudController {
 
         return ResponseEntity.status(HttpStatus.OK).body(clienteService.selectAllClientes());
     }
-    @GetMapping("/{cpf_cliente}")
+    @GetMapping("/busca/{cpf_cliente}")
     public ResponseEntity<Object> findByCpf(@PathVariable @NotNull String cpf_cliente) {
         ClienteDto dto = clienteService.selectClientByCpf(cpf_cliente);
 
