@@ -15,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/clientes")
@@ -28,13 +29,19 @@ public class ClienteCrudController {
 
         return ResponseEntity.status(HttpStatus.OK).body(clienteService.selectAllClientes());
     }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<ClienteDto> listClienteById(@PathVariable @NotNull int id) {
-        ClienteDto dto = clienteService.selectClienteById(id);
+    @GetMapping("/{cpf_cliente}")
+    public ResponseEntity<Object> findByCpf(@PathVariable @NotNull String cpf_cliente) {
+        ClienteDto dto = clienteService.selectClientByCpf(cpf_cliente);
 
         return ResponseEntity.ok(dto);
     }
+
+//    @GetMapping("/{id}")
+//    public ResponseEntity<ClienteDto> listClienteById(@PathVariable @NotNull int id) {
+//        ClienteDto dto = clienteService.selectClienteById(id);
+//
+//        return ResponseEntity.ok(dto);
+//    }
 
     @PostMapping
     public ResponseEntity<ClienteDto> cadastroCliente(@RequestBody @Valid ClienteDto dto, UriComponentsBuilder uriBuilder) {

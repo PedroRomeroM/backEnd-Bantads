@@ -8,11 +8,15 @@ import lombok.Setter;
 public class ClienteDto {
     private Integer clientId;
     private String nomeCliente;
-    private String cpfCliente;
-    private float salarioCliente;
-    private int idadeCliente;
     private String emailCliente;
-    private String cepCliente;
-    private int numeroResidenciaCliente;
+    private String cpfCliente;
+    private String telefoneCliente;
+    private float salarioCliente;
+    private String tipoEnderecoCliente;
+    private String logradouroCliente;
+    private String numeroResidenciaCliente;
     private String complementoResidenciaCliente;
+    private String cepCliente;
+    private String cidadeCliente;
+    private String estadoCliente;
 }

@@ -28,24 +28,28 @@ public class Cliente {
     private String nomeCliente;
 
     @NotBlank
+    @Size(max = 255)
+    private String emailCliente;
+
+    @NotBlank
     @Size(min = 11,max = 11)
     private String cpfCliente;
+
+    @NotBlank
+    @Size(min=11, max=20)
+    private String telefoneCliente;
 
     @NotNull
     @Positive
     private float salarioCliente;
 
-    @NotNull
-    @Positive
-    private int idadeCliente;
+    @NotBlank
+    @Size(max = 255)
+    private String tipoEnderecoCliente;
 
     @NotBlank
     @Size(max = 255)
-    private String emailCliente;
-
-    @NotBlank
-    @Size(min = 8, max = 8)
-    private String cepCliente;
+    private String logradouroCliente;
 
     @NotNull
     @Positive
@@ -54,4 +58,17 @@ public class Cliente {
     @NotBlank
     @Size(max = 255)
     private String complementoResidenciaCliente;
+
+    @NotBlank
+    @Size(min = 8, max = 8)
+    private String cepCliente;
+
+    @NotBlank
+    @Size(max = 50)
+    private String cidadeCliente;
+
+    @NotBlank
+    @Size(min = 2, max = 2)
+    private String estadoCliente;
+
 }
