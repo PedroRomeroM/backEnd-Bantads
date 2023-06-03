@@ -1,0 +1,2 @@
+ALTER TABLE gerentes
+ALTER COLUMN senha_gerente SET NOT NULL;

@@ -1,0 +1,1 @@
+ALTER TABLE gerentes ADD senha_gerente VARCHAR(255);
