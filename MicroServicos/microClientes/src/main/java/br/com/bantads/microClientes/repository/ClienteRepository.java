@@ -11,6 +11,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
     @Query("from Cliente c where c.cpfCliente = :cpf_cliente")
     Optional<Cliente> findByCpf(String cpf_cliente);
 
-    @Query("from Cliente c order by c.salarioCliente desc")
+    @Query("from Cliente c order by c.salarioCliente desc limit 3")
     List<Cliente> findTopClientes();
 }
