@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/clientes")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 public class ClienteCrudController {
 
     @Autowired
