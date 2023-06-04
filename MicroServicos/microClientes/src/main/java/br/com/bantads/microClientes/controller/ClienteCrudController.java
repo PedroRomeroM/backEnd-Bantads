@@ -37,6 +37,11 @@ public class ClienteCrudController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/top")
+    public ResponseEntity<List<ClienteDto>> findTopClients(){
+        return ResponseEntity.status(HttpStatus.OK).body(clienteService.findTopClient());
+    }
+
 //    @GetMapping("/{id}")
 //    public ResponseEntity<ClienteDto> listClienteById(@PathVariable @NotNull int id) {
 //        ClienteDto dto = clienteService.selectClienteById(id);

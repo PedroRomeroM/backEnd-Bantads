@@ -39,6 +39,14 @@ public class ClienteService {
 
     }
 
+    public List<ClienteDto> findTopClient(){
+        return clienteRepository
+                .findTopClientes()
+                .stream()
+                .map(e -> modelMapperCliente.map(e, ClienteDto.class))
+                .collect(Collectors.toList());
+    }
+
     public ClienteDto selectClienteById(Integer clientid) {
         Cliente cliente = clienteRepository.findById(clientid)
                 .orElseThrow(() -> new EntityNotFoundException());
