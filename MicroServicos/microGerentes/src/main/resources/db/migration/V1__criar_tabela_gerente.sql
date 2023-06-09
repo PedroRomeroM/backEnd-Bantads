@@ -1,5 +1,5 @@
 CREATE TABLE gerentes (
-    gerente_id SERIAL,
+    gerente_id SERIAL ,
     nome_gerente VARCHAR(255) NOT NULL,
     email_gerente VARCHAR(255) NOT NULL,
     cpf_gerente VARCHAR(11) UNIQUE NOT NULL,
