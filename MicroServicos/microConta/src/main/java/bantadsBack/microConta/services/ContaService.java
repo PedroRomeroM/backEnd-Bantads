@@ -77,7 +77,7 @@ public class ContaService {
 
         contaParaAtualizar.setSaldoConta(dados.getSaldoConta());
         contaParaAtualizar.setLimiteConta(dados.getLimiteConta());
-        contaParaAtualizar.setIdCliente(dados.getIdCliente());
+        contaParaAtualizar.setIdCliente(dados.getClientId());
         contaParaAtualizar = repositoryR.save(contaParaAtualizar);
 
         return mapper.map(contaParaAtualizar, ContaDTO.class);
@@ -106,12 +106,12 @@ public class ContaService {
 
             ClienteContaDTO dtoInfo = new ClienteContaDTO();
 
-            dtoInfo.setIdCliente(dto.getIdCliente());
+            dtoInfo.setClientId(dto.getClientId());
             dtoInfo.setIdConta(dto.getIdConta());
             dtoInfo.setSaldoCliente(dto.getSaldoConta());
 
 
-            Optional<ClienteR> cliente = clienteRepositoryR.findById(String.valueOf(dto.getIdCliente()));
+            Optional<ClienteR> cliente = clienteRepositoryR.findById(String.valueOf(dto.getClientId()));
 
 
             if(cliente.isPresent()){

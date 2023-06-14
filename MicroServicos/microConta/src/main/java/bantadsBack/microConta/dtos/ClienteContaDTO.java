@@ -15,7 +15,7 @@ public class ClienteContaDTO {
 
     private Long idConta;
 
-    private Long idCliente;
+    private Long clientId;
 
     private String nomeCliente;
 

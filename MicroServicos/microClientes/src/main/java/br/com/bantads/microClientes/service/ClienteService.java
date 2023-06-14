@@ -54,11 +54,11 @@ public class ClienteService {
         return modelMapperCliente.map(cliente, ClienteDto.class);
     }
 
-    public ClienteDto createCliente(ClienteDto dto) {
+    public int createCliente(ClienteDto dto) {
         Cliente cliente = modelMapperCliente.map(dto, Cliente.class);
         clienteRepository.save(cliente);
 
-        return modelMapperCliente.map(cliente, ClienteDto.class);
+        return cliente.getClientId();
     }
     public ClienteDto updateCliente(int clienteId, ClienteDto dto) {
         Cliente cliente = modelMapperCliente.map(dto, Cliente.class);

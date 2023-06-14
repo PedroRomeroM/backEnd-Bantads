@@ -1,4 +1,4 @@
-package br.com.bantads.microClientes.dto;
+package br.com.bantads.orquestrador.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ClienteDto {
+    private Integer clientId;
     private String nomeCliente;
     private String emailCliente;
     private String cpfCliente;

@@ -42,21 +42,6 @@ public class ClienteCrudController {
         return ResponseEntity.status(HttpStatus.OK).body(clienteService.findTopClient());
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<ClienteDto> listClienteById(@PathVariable @NotNull int id) {
-//        ClienteDto dto = clienteService.selectClienteById(id);
-//
-//        return ResponseEntity.ok(dto);
-//    }
-
-    @PostMapping
-    public ResponseEntity<ClienteDto> cadastroCliente(@RequestBody @Valid ClienteDto dto, UriComponentsBuilder uriBuilder) {
-        ClienteDto clienteDto = clienteService.createCliente(dto);
-        URI path = uriBuilder.path("/clientes/{id}").buildAndExpand(clienteDto.getClientId()).toUri();
-
-        return ResponseEntity.created(path).body(clienteDto);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<ClienteDto> updateCliente(@PathVariable @NotNull int id, @RequestBody @Valid ClienteDto dto) {
         ClienteDto updated = clienteService.updateCliente(id,dto);

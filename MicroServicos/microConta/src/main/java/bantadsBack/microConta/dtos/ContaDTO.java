@@ -16,7 +16,7 @@ public class ContaDTO {
     private Long idConta;
     private BigDecimal saldoConta;
     private BigDecimal limiteConta;
-    private Long idCliente;
+    private Long clientId;
     private String situacaoConta;
     private Date dataCriacaoConta;
     private String nomeGerente;

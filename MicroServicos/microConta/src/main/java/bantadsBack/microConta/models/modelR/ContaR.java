@@ -42,9 +42,6 @@ public class ContaR {
     private Date dataCriacaoConta;
 
     private Long idGerente;
-
-    private String nomeGerente;
-
     public ContaCUD toCommand(){
         ModelMapper mapper = new ModelMapper();
         return mapper.map(this, ContaCUD.class);

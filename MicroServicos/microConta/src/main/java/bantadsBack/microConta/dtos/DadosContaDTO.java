@@ -7,8 +7,9 @@ import lombok.Setter;
 @Setter
 public class DadosContaDTO {
 
-    private Long idCliente;
+    private Long clientId;
     private String nomeCliente;
     private String cpfCliente;
+
 
 }

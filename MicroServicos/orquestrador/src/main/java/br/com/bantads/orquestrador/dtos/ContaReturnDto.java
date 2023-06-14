@@ -1,13 +1,11 @@
-package bantadsBack.microConta.dtos;
+package br.com.bantads.orquestrador.dtos;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-@AllArgsConstructor
 @Getter
 @Setter
-public class ResponseDto {
+public class ContaReturnDto {
     private Status status;
     private String WhoAmI;
 }

@@ -1,10 +1,10 @@
 CREATE TABLE tb_cliente(
-    id_cliente INTEGER,
+    client_id INTEGER,
     nome_cliente VARCHAR(255),
     cpf_cliente VARCHAR(11),
 
 
-    CONSTRAINT pk_cliente PRIMARY KEY (id_cliente)
+    CONSTRAINT pk_cliente PRIMARY KEY (client_id)
 );
 
 CREATE TABLE tb_gerente(
@@ -25,7 +25,7 @@ CREATE TABLE tb_conta(
     id_gerente_conta INTEGER,
 
     CONSTRAINT pk_conta PRIMARY KEY (id_conta),
-    CONSTRAINT fk_cliente FOREIGN KEY (id_cliente_conta) REFERENCES tb_cliente (id_cliente),
+    CONSTRAINT fk_cliente FOREIGN KEY (id_cliente_conta) REFERENCES tb_cliente (client_id),
     CONSTRAINT fk_gerente FOREIGN KEY (id_gerente_conta) REFERENCES tb_gerente (id_gerente)
 );
 
