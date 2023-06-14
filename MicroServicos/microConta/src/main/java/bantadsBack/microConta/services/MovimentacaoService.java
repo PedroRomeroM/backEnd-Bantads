@@ -2,8 +2,8 @@ package bantadsBack.microConta.services;
 
 import bantadsBack.microConta.dtos.ContaDTO;
 import bantadsBack.microConta.dtos.MovimentacoesDTO;
-import bantadsBack.microConta.modelCUD.ContaCUD;
-import bantadsBack.microConta.modelCUD.MovimentacoesCUD;
+import bantadsBack.microConta.models.modelCUD.ContaCUD;
+import bantadsBack.microConta.models.modelCUD.MovimentacoesCUD;
 import bantadsBack.microConta.repositoryCUD.ContaRepositoryCUD;
 import bantadsBack.microConta.repositoryCUD.MovimentacaoRepositoryCUD;
 import bantadsBack.microConta.repositoryR.MovimentacaoRepositoryR;

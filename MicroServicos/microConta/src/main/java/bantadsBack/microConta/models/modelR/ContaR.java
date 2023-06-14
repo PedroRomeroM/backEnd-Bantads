@@ -1,11 +1,14 @@
-package bantadsBack.microConta.modelR;
+package bantadsBack.microConta.models.modelR;
 
+import bantadsBack.microConta.dtos.ContaDTO;
+import bantadsBack.microConta.models.modelCUD.ContaCUD;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.modelmapper.ModelMapper;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -41,5 +44,12 @@ public class ContaR {
     private Long idGerente;
 
     private String nomeGerente;
+
+    public ContaCUD toCommand(){
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(this, ContaCUD.class);
+    }
+
+
 
 }

@@ -1,6 +1,7 @@
-package bantadsBack.microConta.modelR;
+package bantadsBack.microConta.models.modelR;
 
 
+import bantadsBack.microConta.dtos.ContaDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -11,10 +12,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.modelmapper.ModelMapper;
 
 import java.math.BigDecimal;
 
 @Entity
+@Table(name="tb_cliente")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -27,14 +30,12 @@ public class ClienteR {
     @Column(nullable = false)
     private String nomeCliente;
 
-    @Column(nullable = false)
-    private BigDecimal salarioCliente;
-
     @Column(length = 11, nullable = false, unique = true)
     private String cpfCliente;
 
-    private String cidadeCliente;
-
-    private String estadoCliente;
+    public ContaDTO toDto() {
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(this, ContaDTO.class);
+    }
 
 }

@@ -1,11 +1,7 @@
-package bantadsBack.microConta.modelCUD;
+package bantadsBack.microConta.models.modelR;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,10 +17,9 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MovimentacoesCUD {
+public class MovimentacoesR {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long idMovimentacao;
 
     @CreationTimestamp
@@ -38,10 +33,10 @@ public class MovimentacoesCUD {
 
     @ManyToOne
     @JoinColumn(name = "de_cliente")
-    private ContaCUD deCliente;
+    private ContaR deCliente;
 
     @ManyToOne
     @JoinColumn(name = "para_cliente")
-    private ContaCUD paraCliente;
+    private ContaR paraCliente;
 
 }

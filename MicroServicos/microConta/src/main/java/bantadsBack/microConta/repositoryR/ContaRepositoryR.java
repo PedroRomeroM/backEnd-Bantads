@@ -1,7 +1,9 @@
 package bantadsBack.microConta.repositoryR;
 
-import bantadsBack.microConta.modelR.ContaR;
+import bantadsBack.microConta.models.modelR.ContaR;
 import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
 
-public interface ContaRepositoryR extends JpaRepository<ContaR, String> {
+public interface ContaRepositoryR extends JpaRepository<ContaR, Long> {
+    public ContaR findByIdConta(Long idConta);
 }

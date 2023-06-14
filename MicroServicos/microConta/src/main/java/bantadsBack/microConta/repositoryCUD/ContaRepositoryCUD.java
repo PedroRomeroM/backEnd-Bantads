@@ -1,6 +1,7 @@
 package bantadsBack.microConta.repositoryCUD;
 
-import bantadsBack.microConta.modelCUD.ContaCUD;
+import bantadsBack.microConta.models.modelCUD.ContaCUD;
+import bantadsBack.microConta.models.modelR.ContaR;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

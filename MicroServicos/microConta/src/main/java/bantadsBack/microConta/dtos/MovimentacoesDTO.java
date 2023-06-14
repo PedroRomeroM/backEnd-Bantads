@@ -1,6 +1,6 @@
 package bantadsBack.microConta.dtos;
 
-import bantadsBack.microConta.modelR.ContaR;
+import bantadsBack.microConta.models.modelR.ContaR;
 import lombok.Getter;
 import lombok.Setter;
 
