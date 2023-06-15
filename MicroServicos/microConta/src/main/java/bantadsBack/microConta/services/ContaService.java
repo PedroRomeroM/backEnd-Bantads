@@ -3,12 +3,15 @@ package bantadsBack.microConta.services;
 import bantadsBack.microConta.dtos.ClienteContaDTO;
 import bantadsBack.microConta.dtos.DadosContaDTO;
 import bantadsBack.microConta.dtos.ContaDTO;
+import bantadsBack.microConta.dtos.GerenteContaDTO;
 import bantadsBack.microConta.models.modelCUD.ContaCUD;
 import bantadsBack.microConta.models.modelCUD.DadosClienteCUD;
+import bantadsBack.microConta.models.modelCUD.DadosGerenteCUD;
 import bantadsBack.microConta.models.modelR.ClienteR;
 import bantadsBack.microConta.models.modelR.ContaR;
 import bantadsBack.microConta.repositoryCUD.ContaRepositoryCUD;
 import bantadsBack.microConta.repositoryCUD.DadosClienteRepository;
+import bantadsBack.microConta.repositoryCUD.DadosGerenteRepository;
 import bantadsBack.microConta.repositoryR.ClienteRepositoryR;
 import bantadsBack.microConta.repositoryR.ContaRepositoryR;
 import org.modelmapper.ModelMapper;
@@ -39,6 +42,9 @@ public class ContaService {
     private DadosClienteRepository dadosClienteRepository;
 
     @Autowired
+    private DadosGerenteRepository dadosGerenteRepository;
+
+    @Autowired
     private ModelMapper mapper;
 
     public ContaDTO criarConta(Long clienteConta) {
@@ -63,6 +69,15 @@ public class ContaService {
         cliente = dadosClienteRepository.save(cliente);
 
         return mapper.map(cliente, DadosContaDTO.class);
+    }
+
+    public GerenteContaDTO salvarGerente(GerenteContaDTO gerenteContaDTO){
+
+        DadosGerenteCUD gerente = mapper.map(gerenteContaDTO, DadosGerenteCUD.class);
+
+        gerente = dadosGerenteRepository.save(gerente);
+
+        return mapper.map(gerente, GerenteContaDTO.class);
     }
 
 

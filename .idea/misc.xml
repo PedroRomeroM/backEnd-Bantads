@@ -7,6 +7,7 @@
         <option value="$PROJECT_DIR$/MicroServicos/microClientes/pom.xml" />
         <option value="$PROJECT_DIR$/MicroServicos/microGerentes/pom.xml" />
         <option value="$PROJECT_DIR$/MicroServicos/microConta/pom.xml" />
+        <option value="$PROJECT_DIR$/MicroServicos/orquestrador/pom.xml" />
       </list>
     </option>
   </component>

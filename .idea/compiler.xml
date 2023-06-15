@@ -7,9 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="orquestrador" />
+        <module name="microClientes" />
         <module name="microConta" />
         <module name="microGerentes" />
-        <module name="microClientes" />
       </profile>
     </annotationProcessing>
   </component>
@@ -18,6 +19,7 @@
       <module name="microClientes" options="-parameters" />
       <module name="microConta" options="-parameters" />
       <module name="microGerentes" options="-parameters" />
+      <module name="orquestrador" options="-parameters" />
     </option>
   </component>
 </project>
