@@ -1,19 +1,18 @@
 package bantadsBack.microConta.services;
 
-import bantadsBack.microConta.dtos.ClienteContaDTO;
-import bantadsBack.microConta.dtos.DadosContaDTO;
-import bantadsBack.microConta.dtos.ContaDTO;
-import bantadsBack.microConta.dtos.GerenteContaDTO;
+import bantadsBack.microConta.dtos.*;
 import bantadsBack.microConta.models.modelCUD.ContaCUD;
 import bantadsBack.microConta.models.modelCUD.DadosClienteCUD;
 import bantadsBack.microConta.models.modelCUD.DadosGerenteCUD;
 import bantadsBack.microConta.models.modelR.ClienteR;
 import bantadsBack.microConta.models.modelR.ContaR;
+import bantadsBack.microConta.models.modelR.GerenteR;
 import bantadsBack.microConta.repositoryCUD.ContaRepositoryCUD;
 import bantadsBack.microConta.repositoryCUD.DadosClienteRepository;
 import bantadsBack.microConta.repositoryCUD.DadosGerenteRepository;
 import bantadsBack.microConta.repositoryR.ClienteRepositoryR;
 import bantadsBack.microConta.repositoryR.ContaRepositoryR;
+import bantadsBack.microConta.repositoryR.GerenteRepositoryR;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +42,9 @@ public class ContaService {
 
     @Autowired
     private DadosGerenteRepository dadosGerenteRepository;
+
+    @Autowired
+    private GerenteRepositoryR gerenteRepositoryR;
 
     @Autowired
     private ModelMapper mapper;
@@ -78,6 +80,15 @@ public class ContaService {
         gerente = dadosGerenteRepository.save(gerente);
 
         return mapper.map(gerente, GerenteContaDTO.class);
+    }
+
+    public Long tranferirCliente(){
+        // consultar o gerente com mais contas e pegar o id
+
+        GerenteIDDto gerente = gerenteRepositoryR.findAccountWithMostManagers();
+        Long id_gerente = gerente.getIdGerenteConta();
+
+        return id_gerente;
     }
 
 

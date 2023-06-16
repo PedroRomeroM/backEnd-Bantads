@@ -6,7 +6,9 @@ import bantadsBack.microConta.repositoryCUD.ContaRepositoryCUD;
 import bantadsBack.microConta.repositoryR.ContaRepositoryR;
 import bantadsBack.microConta.services.ContaService;
 import bantadsBack.microConta.services.MovimentacaoService;
+import org.hibernate.mapping.Any;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,14 +40,21 @@ public class ContaController {
         try{
             ContaDTO contaAtualizada = contaService.updateConta(id, account);
             return ResponseEntity.ok().body(contaAtualizada);
-        }catch (Exception e){
+        }catch (Exception e) {
             throw new Exception(e);
         }
-
-
-
     }
 
+
+    @GetMapping(value = "/testeauth")
+    public ResponseEntity<Object> teste() throws Exception {
+        try {
+            Long id = contaService.tranferirCliente();
+            return new ResponseEntity<>(id, HttpStatus.CREATED);
+        }catch (Exception e) {
+            throw new Exception(e);
+        }
+    }
 
 
 }

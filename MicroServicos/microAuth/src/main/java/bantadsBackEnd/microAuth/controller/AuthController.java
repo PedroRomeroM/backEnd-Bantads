@@ -18,7 +18,8 @@ import java.util.Optional;
 
 
 @RestController
-@CrossOrigin
+@RequestMapping("/auth")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
 
     @Autowired
@@ -36,22 +37,34 @@ public class AuthController {
             return new ResponseEntity<>("Faltando email ou senha", HttpStatus.BAD_REQUEST);
         }
 
-        Optional<Auth> authEntity = repo.findByEmail(email);
+        Auth authEntity = repo.findByEmail(email);
         String salt = GerarSenha.extractSalt();
 
         if (authEntity == null) {
             return new ResponseEntity<>(new JsonResponse(false, "Email não registrado", null), HttpStatus.NOT_FOUND);
         }
 
-//        Boolean isPasswordCorrect = GerarSenha.verifyUserPassword(authEntity.getPassword(), password, salt);
+        Boolean isPasswordCorrect = GerarSenha.verifyUserPassword(authEntity.getSenha(), password, salt);
 
-        return new ResponseEntity<>(new JsonResponse(false, "Usuário e/ou senha incorretos", null), HttpStatus.INTERNAL_SERVER_ERROR);
+        if (auth.getEmail().equals(authEntity.getEmail())
+                && isPasswordCorrect) {
+            try {
+                authEntity.setSenha("");
+                return new ResponseEntity<>(new JsonResponse(true, "", mapper.map(authEntity, AuthDto.class)), HttpStatus.OK);
+            } catch (Exception e) {
+                return new ResponseEntity<>(new JsonResponse(false, "Internal server error while creating JWT", null),
+                        HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+
+        return new ResponseEntity<>(new JsonResponse(false, "Usuário e/ou senha incorretos", null),
+                HttpStatus.UNAUTHORIZED);
     }
 
     @PostMapping("/auth")
     ResponseEntity<Object> register(@RequestBody AuthDto auth) throws NoSuchAlgorithmException {
         if (auth.getEmail() != null && auth.getSenha() != null) {
-            Optional<Auth> authEntity = repo.findByEmail(auth.getEmail());
+            Auth authEntity = repo.findByEmail(auth.getEmail());
 
             if (authEntity != null) {
                 return new ResponseEntity<>(new JsonResponse(false, "Email já cadastrado", null), HttpStatus.BAD_REQUEST);
@@ -61,8 +74,8 @@ public class AuthController {
                 auth.setRole(String.valueOf(Role.CLIENTE));
             }
 
-//            String password = auth.getPassword();
-//            String saltValue = GerarSenha.extractSalt();
+            String password = auth.getSenha();
+            String saltValue = GerarSenha.extractSalt();
             String encryptedPassword = GerarSenha.encrypt();
 
             auth.setSenha(encryptedPassword);
