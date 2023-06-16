@@ -7,17 +7,27 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="orquestrador" />
+        <module name="microClientes" />
         <module name="microConta" />
         <module name="microGerentes" />
-        <module name="microClientes" />
+        <module name="microAuth" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="microClientes (1)" target="20" />
+      <module name="microClientes (2)" target="20" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="microAuth" options="-parameters" />
       <module name="microClientes" options="-parameters" />
+      <module name="microClientes (1)" options="-parameters" />
+      <module name="microClientes (2)" options="-parameters" />
       <module name="microConta" options="-parameters" />
       <module name="microGerentes" options="-parameters" />
+      <module name="orquestrador" options="-parameters" />
     </option>
   </component>
 </project>
