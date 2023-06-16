@@ -8,8 +8,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="orquestrador" />
-        <module name="microConta" />
         <module name="microClientes" />
+        <module name="microConta" />
+        <module name="microGerentes" />
       </profile>
     </annotationProcessing>
   </component>
@@ -17,6 +18,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="microClientes" options="-parameters" />
       <module name="microConta" options="-parameters" />
+      <module name="microGerentes" options="-parameters" />
       <module name="orquestrador" options="-parameters" />
     </option>
   </component>

@@ -26,14 +26,14 @@ public class GerenteCrudController {
         return ResponseEntity.status(HttpStatus.OK).body(gerenteService.selectAllGerente());
     }
 
-    @PostMapping
-    public ResponseEntity<GerenteDto> cadastroGerente(@RequestBody @Valid GerenteDto dto, UriComponentsBuilder uriBuilder){
-        GerenteDto gerenteDto = gerenteService.createGerente(dto);
-        URI path = uriBuilder.path("/gerentes/{id}").buildAndExpand(gerenteDto.getGerenteId()).toUri();
-
-        return ResponseEntity.created(path).body(gerenteDto);
-
-    }
+//    @PostMapping
+//    public ResponseEntity<GerenteDto> cadastroGerente(@RequestBody @Valid GerenteDto dto, UriComponentsBuilder uriBuilder){
+//        GerenteDto gerenteDto = gerenteService.createGerente(dto);
+//        URI path = uriBuilder.path("/gerentes/{id}").buildAndExpand(gerenteDto.getGerenteId()).toUri();
+//
+//        return ResponseEntity.created(path).body(gerenteDto);
+//
+//    }
 
     @PutMapping
     public ResponseEntity<GerenteDto> updateGerente(@PathVariable @NotNull int id, @RequestBody @Valid GerenteDto dto){

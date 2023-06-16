@@ -14,5 +14,4 @@ public class ResponseDto {
     private String cpfCliente;
     private float salario;
     private Status status;
-    private String WhoAmI;
 }

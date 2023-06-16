@@ -1,4 +1,4 @@
-package br.com.bantads.orquestrador.dtos;
+package br.com.bantads.orquestrador.dtos.sagacliente;
 
 import lombok.Getter;
 import lombok.Setter;

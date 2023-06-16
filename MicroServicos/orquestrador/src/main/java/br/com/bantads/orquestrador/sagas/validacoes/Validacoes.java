@@ -1,6 +1,7 @@
-package br.com.bantads.orquestrador.sagas.autocadastro;
+package br.com.bantads.orquestrador.sagas.validacoes;
 
-import br.com.bantads.orquestrador.dtos.ClienteDto;
+import br.com.bantads.orquestrador.dtos.sagacliente.ClienteDto;
+import br.com.bantads.orquestrador.dtos.sagainserirgerente.GerenteDto;
 
 public class Validacoes {
     //Validar o cpf do cliente
@@ -63,6 +64,15 @@ public class Validacoes {
                 dto.getComplementoResidenciaCliente() == null || dto.getCepCliente() == null ||
                 dto.getCidadeCliente() == null || dto.getEstadoCliente() == null) {
 
+            return false;
+        }
+        return true;
+    }
+    public static boolean validarCampos(GerenteDto dto) {
+
+        if (dto.getCpfGerente() == null || dto.getEmailGerente() == null ||
+                dto.getNomeGerente() == null || dto.getSenhaGerente() == null ||
+                dto.getTelefoneGerente() == null) {
             return false;
         }
         return true;

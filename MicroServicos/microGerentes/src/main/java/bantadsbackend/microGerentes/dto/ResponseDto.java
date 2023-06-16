@@ -1,4 +1,4 @@
-package bantadsBack.microConta.dtos;
+package bantadsbackend.microGerentes.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,5 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ResponseDto {
+    private long gerenteId;
     private Status status;
 }

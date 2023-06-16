@@ -1,4 +1,4 @@
-package bantadsbackend.microGerentes.dto;
+package br.com.bantads.orquestrador.dtos.sagainserirgerente;
 
 import lombok.Getter;
 import lombok.Setter;

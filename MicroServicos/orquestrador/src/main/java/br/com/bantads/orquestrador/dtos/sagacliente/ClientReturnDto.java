@@ -1,4 +1,4 @@
-package br.com.bantads.orquestrador.dtos;
+package br.com.bantads.orquestrador.dtos.sagacliente;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +10,4 @@ public class ClientReturnDto {
     private String nomeCliente;
     private String cpfCliente;
     private float salarioCliente;
-    private String WhoAmI;
-
 }

@@ -29,11 +29,11 @@ public class GerenteService {
 
     public void deleteGerente (int gerenteId){ gerenteRepository.deleteById(gerenteId); }
 
-    public GerenteDto createGerente(GerenteDto dto){
+    public long createGerente(GerenteDto dto){
         Gerente gerente = modelMapperGerente.map(dto, Gerente.class);
         gerenteRepository.save(gerente);
 
-        return modelMapperGerente.map(gerente, GerenteDto.class);
+        return gerente.getGerenteId();
     }
 
     public GerenteDto updateGerente(int gerenteId, GerenteDto dto) {

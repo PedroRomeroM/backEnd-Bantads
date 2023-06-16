@@ -1,5 +1,6 @@
-package br.com.bantads.orquestrador.dtos;
+package br.com.bantads.orquestrador.dtos.sagacliente;
 
+import br.com.bantads.orquestrador.dtos.Status;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,5 +8,4 @@ import lombok.Setter;
 @Setter
 public class ContaReturnDto {
     private Status status;
-    private String WhoAmI;
 }
