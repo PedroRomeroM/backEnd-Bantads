@@ -14,6 +14,7 @@ import bantadsBack.microConta.repositoryCUD.DadosClienteRepository;
 import bantadsBack.microConta.repositoryCUD.DadosGerenteRepository;
 import bantadsBack.microConta.repositoryR.ClienteRepositoryR;
 import bantadsBack.microConta.repositoryR.ContaRepositoryR;
+import bantadsBack.microConta.repositoryR.GerenteRepositoryConsulta;
 import bantadsBack.microConta.repositoryR.GerenteRepositoryR;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,8 @@ public class ContaService {
     @Autowired
     private ContaRepositoryCUD repositoryCUD;
 
+    @Autowired
+    private GerenteRepositoryConsulta gerenteRepositoryConsulta;
     @Autowired
     private ContaRepositoryR repositoryR;
 
@@ -98,7 +101,7 @@ public class ContaService {
 
     public List<ConsultaGerenteDTO> consultarGerenteTelaInicialAdmin(){
         // Tela Inicial de Admin
-        return gerenteRepositoryR
+        return gerenteRepositoryConsulta
                 .consultaGerente()
                 .stream()
                 .map(e -> mapper.map(e, ConsultaGerenteDTO.class))
