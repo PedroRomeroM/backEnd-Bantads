@@ -1,11 +1,7 @@
 package bantadsBack.microConta.models.modelCUD;
 
-import bantadsBack.microConta.dtos.ContaDTO;
-import bantadsBack.microConta.models.modelR.ContaR;
+import bantadsBack.microConta.dtos.sagaCadastrarCliente.ContaDTO;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +16,8 @@ import java.util.Date;
 @Table(name="tb_conta")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class ContaCUD {
 
     @Id
@@ -30,7 +26,7 @@ public class ContaCUD {
     private Long idConta;
 
     @Column(nullable = false)
-    private BigDecimal limiteConta;
+    private Long limiteConta;
 
     @Column(columnDefinition="CHAR(1)", nullable = false)
     private String situacaoConta;
@@ -57,5 +53,12 @@ public class ContaCUD {
     public ContaDTO toDto() {
         ModelMapper mapper = new ModelMapper();
         return mapper.map(this, ContaDTO.class);
+    }
+
+    public Long calculoLimite(Long salario){
+        if(salario >= 2000.00){
+            return salario/2;
+        }
+        return (long) 0.0;
     }
 }

@@ -23,11 +23,7 @@ public class GerenteListener {
     @RabbitListener(queues = "criar-gerente")
     public void receberMensagens(GerenteDto dto){
         //salvar gerente no banco
-        long gerenteId = gerenteService.createGerente(dto);
-
-        //definir o dto da response
-        ResponseDto rDto = new ResponseDto(gerenteId, Status.SUCESSO);
-
+        ResponseDto rDto = gerenteService.createGerente(dto);
         //enviar mensagem para a fila do orquestrador
         rabbitTemplate.convertAndSend("fila-orquestrador-gerente-criado",rDto);
     }

@@ -62,7 +62,7 @@ public class AuthController {
     }
 
     @PostMapping("/auth")
-    ResponseEntity<Object> register(@RequestBody AuthDto auth) throws NoSuchAlgorithmException {
+    public ResponseEntity<Object> register(@RequestBody AuthDto auth) throws NoSuchAlgorithmException {
         if (auth.getEmail() != null && auth.getSenha() != null) {
             Auth authEntity = repo.findByEmail(auth.getEmail());
 

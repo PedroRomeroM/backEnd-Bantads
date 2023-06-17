@@ -1,12 +1,14 @@
 package bantadsBack.microConta.services;
 
 import bantadsBack.microConta.dtos.*;
+import bantadsBack.microConta.dtos.sagaCadastrarCliente.ClienteContaDTO;
+import bantadsBack.microConta.dtos.sagaCadastrarCliente.ContaDTO;
+import bantadsBack.microConta.dtos.sagaCadastrarCliente.DadosContaDTO;
 import bantadsBack.microConta.models.modelCUD.ContaCUD;
 import bantadsBack.microConta.models.modelCUD.DadosClienteCUD;
 import bantadsBack.microConta.models.modelCUD.DadosGerenteCUD;
 import bantadsBack.microConta.models.modelR.ClienteR;
 import bantadsBack.microConta.models.modelR.ContaR;
-import bantadsBack.microConta.models.modelR.GerenteR;
 import bantadsBack.microConta.repositoryCUD.ContaRepositoryCUD;
 import bantadsBack.microConta.repositoryCUD.DadosClienteRepository;
 import bantadsBack.microConta.repositoryCUD.DadosGerenteRepository;
@@ -49,19 +51,20 @@ public class ContaService {
     @Autowired
     private ModelMapper mapper;
 
-    public ContaDTO criarConta(Long clienteConta) {
+    public ContaDTO criarConta(DadosContaDTO clienteConta) {
 
-            ContaCUD newConta = new ContaCUD();
+        ContaCUD novaConta = new ContaCUD();
 
-            newConta.setSaldoConta(BigDecimal.ZERO);
-            newConta.setSituacaoConta("E");
-            newConta.setLimiteConta(BigDecimal.valueOf((float) 0));
-            newConta.setIdCliente(clienteConta);
-            newConta.setDataCriacao(null);
+        novaConta.setSaldoConta(BigDecimal.ZERO);
+        novaConta.setSituacaoConta("E");
+        novaConta.setLimiteConta(novaConta.calculoLimite(clienteConta.getSalarioCliente()));
+        novaConta.setIdCliente(clienteConta.getClientId());
+        novaConta.setDataCriacao(null);
+        novaConta.setIdGerente(clienteConta.getIdGerente());
 
-            newConta = repositoryCUD.save(newConta);
+        novaConta = repositoryCUD.save(novaConta);
 
-            return mapper.map(newConta, ContaDTO.class);
+        return mapper.map(novaConta, ContaDTO.class);
     }
 
     public DadosContaDTO salvarCliente(DadosContaDTO dadosContaDTO) {
@@ -82,15 +85,24 @@ public class ContaService {
         return mapper.map(gerente, GerenteContaDTO.class);
     }
 
-    public Long tranferirCliente(){
+    public Long consultarGerente(){
         // consultar o gerente com mais contas e pegar o id
 
-        GerenteIDDto gerente = gerenteRepositoryR.findAccountWithMostManagers();
-        Long id_gerente = gerente.getIdGerenteConta();
+        Long gerente = gerenteRepositoryR.findAccountWithMostManagers();
 
-        return id_gerente;
+
+        return gerente;
     }
 
+    public Long consultarGerenteMenosContas(){
+        // consultar o gerente com menos contas e pegar o id
+        Long gerente = gerenteRepositoryR.gerenteComMenosClientes();
+        return gerente;
+    }
+
+    public Long transferirConta(Long gerente_antigo,Long gerente_novo){
+        return gerenteRepositoryR.substituirGerente(gerente_novo,gerente_antigo);
+    }
 
     public ContaDTO updateConta(Long idConta, @RequestBody ContaDTO dados) throws Exception {
         ContaR contaParaAtualizar = null;

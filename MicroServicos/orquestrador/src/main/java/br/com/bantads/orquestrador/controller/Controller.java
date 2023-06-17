@@ -25,8 +25,6 @@ public class Controller {
 
     @PostMapping(value = "/criar-gerente")
     public ResponseEntity<Object> cadastroGerente(@RequestBody @Valid GerenteDto dto) {
-
-        //todo consultar gerente no micro de conta
         SagaInserirGerente sagaInserirGerente = new SagaInserirGerente();
         return sagaInserirGerente.start(dto,rabbitTemplate);
     }

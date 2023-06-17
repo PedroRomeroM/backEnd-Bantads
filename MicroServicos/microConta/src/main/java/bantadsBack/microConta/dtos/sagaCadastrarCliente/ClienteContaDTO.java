@@ -1,4 +1,4 @@
-package bantadsBack.microConta.dtos;
+package bantadsBack.microConta.dtos.sagaCadastrarCliente;
 
 import java.math.BigDecimal;
 import java.util.Date;

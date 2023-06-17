@@ -1,4 +1,4 @@
-package bantadsBack.microConta.dtos;
+package bantadsBack.microConta.dtos.sagaCadastrarCliente;
 
 import bantadsBack.microConta.models.modelCUD.ContaCUD;
 import bantadsBack.microConta.models.modelR.ContaR;

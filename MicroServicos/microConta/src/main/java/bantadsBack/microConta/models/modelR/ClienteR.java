@@ -1,20 +1,16 @@
 package bantadsBack.microConta.models.modelR;
 
 
-import bantadsBack.microConta.dtos.ContaDTO;
+import bantadsBack.microConta.dtos.sagaCadastrarCliente.ContaDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
-
-import java.math.BigDecimal;
 
 @Entity
 @Table(name="tb_cliente")

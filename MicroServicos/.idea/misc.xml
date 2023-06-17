@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/orquestrador/pom.xml" />
         <option value="$PROJECT_DIR$/microConta/pom.xml" />
         <option value="$PROJECT_DIR$/microGerentes/pom.xml" />
+        <option value="$PROJECT_DIR$/microAuth/pom.xml" />
       </list>
     </option>
   </component>

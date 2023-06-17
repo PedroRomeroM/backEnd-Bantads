@@ -14,11 +14,11 @@ public class OrchestratorAutoCadastroListener {
     @RabbitListener(queues = "fila-orquestrador-cliente-criado")
     public void receberMensagensCliente(ClientReturnDto dto){
         rabbitTemplate.convertAndSend("criar-conta",dto);
-        System.out.println("Pediu pra criar a conta");
     }
     @RabbitListener(queues = "fila-orquestrador-conta-criada")
     public void receberMensagensConta(ContaReturnDto dto){
-        System.out.println(dto.getStatus() + " CRIOU PORRA");
-
+        rabbitTemplate.convertAndSend("criar-login",dto);
     }
+
+    //TODO CRIAR O LOGIN
 }

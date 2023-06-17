@@ -11,11 +11,13 @@
         <module name="microClientes" />
         <module name="microConta" />
         <module name="microGerentes" />
+        <module name="microAuth" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="microAuth" options="-parameters" />
       <module name="microClientes" options="-parameters" />
       <module name="microConta" options="-parameters" />
       <module name="microGerentes" options="-parameters" />

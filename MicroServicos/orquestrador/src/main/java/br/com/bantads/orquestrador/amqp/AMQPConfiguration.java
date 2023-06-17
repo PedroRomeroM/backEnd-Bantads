@@ -39,6 +39,10 @@ public class AMQPConfiguration {
         return new Queue("fila-orquestrador-cliente-criado",false);
     }
     @Bean
+    public Queue criarFilaOrquestradorLogin(){
+        return new Queue("fila-orquestrador-login-criado",false);
+    }
+    @Bean
     public Queue criarFilaOrquestradorConta(){
         return new Queue("fila-orquestrador-conta-criada",false);
     }
@@ -46,6 +50,12 @@ public class AMQPConfiguration {
     public Queue criarFilaOrquestradorGerente(){
         return new Queue("fila-orquestrador-gerente-criado",false);
     }
+    @Bean
+    public Queue criarFilaNovoGerenteConta(){
+        return new Queue("registrar-novo-gerente-no-micro-contas",false);
+    }
+    @Bean
+    public Queue criarFilaDeRetoroNovoGerente(){return new Queue("novo-gerente-registrado-no-micro-de-contas",false);}
     @Bean
     public RabbitAdmin criarRabbitAdmin(ConnectionFactory conn){
         return new RabbitAdmin(conn);

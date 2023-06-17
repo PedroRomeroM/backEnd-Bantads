@@ -1,9 +1,9 @@
 package bantadsBack.microConta.amqp;
 
-import bantadsBack.microConta.dtos.DadosContaDTO;
-import bantadsBack.microConta.dtos.ContaDTO;
+import bantadsBack.microConta.dtos.sagaCadastrarCliente.DadosContaDTO;
+import bantadsBack.microConta.dtos.sagaCadastrarCliente.ContaDTO;
 import bantadsBack.microConta.dtos.GerenteContaDTO;
-import bantadsBack.microConta.dtos.ResponseDto;
+import bantadsBack.microConta.dtos.sagaCadastrarCliente.ResponseDto;
 import bantadsBack.microConta.services.ContaService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -21,16 +21,14 @@ public class ContaListener {
     private RabbitTemplate rabbitTemplate;
 
     @RabbitListener(queues = "criar-conta")
-    public void receberMensagens(DadosContaDTO dto, GerenteContaDTO dto2){
+    public void receberMensagens(DadosContaDTO dto){
         //salvar cliente no banco
         DadosContaDTO cliente = contaService.salvarCliente(dto);
-
-        //salvar gerente no banco
-        GerenteContaDTO gerente = contaService.salvarGerente(dto2);
-
-
+        //Query gerente com menos clientes
+        long idGerenteMenosClientes = contaService.consultarGerenteMenosContas();
+        dto.setIdGerente(idGerenteMenosClientes);
         //salvar conta no banco
-        ContaDTO clienteDto = contaService.criarConta(dto.getClientId());
+        ContaDTO clienteDto = contaService.criarConta(dto);
         //definir o dto da response
         ResponseDto rDto = new ResponseDto(SUCESSO);
         //enviar mensagem para a fila do orquestrador

@@ -1,6 +1,8 @@
 package bantadsbackend.microGerentes.service;
 
 import bantadsbackend.microGerentes.dto.GerenteDto;
+import bantadsbackend.microGerentes.dto.ResponseDto;
+import bantadsbackend.microGerentes.dto.Status;
 import bantadsbackend.microGerentes.model.Gerente;
 import bantadsbackend.microGerentes.repository.GerenteRepository;
 import org.modelmapper.ModelMapper;
@@ -29,11 +31,11 @@ public class GerenteService {
 
     public void deleteGerente (int gerenteId){ gerenteRepository.deleteById(gerenteId); }
 
-    public long createGerente(GerenteDto dto){
+    public ResponseDto createGerente(GerenteDto dto){
         Gerente gerente = modelMapperGerente.map(dto, Gerente.class);
         gerenteRepository.save(gerente);
-
-        return gerente.getGerenteId();
+        ResponseDto rDto = new ResponseDto(gerente.getGerenteId(),gerente.getNomeGerente(),gerente.getCpfGerente(), Status.SUCESSO);
+        return rDto;
     }
 
     public GerenteDto updateGerente(int gerenteId, GerenteDto dto) {
