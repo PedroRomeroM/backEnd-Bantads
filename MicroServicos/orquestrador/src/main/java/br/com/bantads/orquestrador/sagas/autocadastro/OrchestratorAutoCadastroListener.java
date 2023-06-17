@@ -20,5 +20,8 @@ public class OrchestratorAutoCadastroListener {
         rabbitTemplate.convertAndSend("criar-login",dto);
     }
 
-    //TODO CRIAR O LOGIN
+    @RabbitListener(queues = "fila-orquestrador-login-criado")
+    public void receberMensagensLogin(ContaReturnDto dto){
+        System.out.println("email enviado com suesso");
+    }
 }

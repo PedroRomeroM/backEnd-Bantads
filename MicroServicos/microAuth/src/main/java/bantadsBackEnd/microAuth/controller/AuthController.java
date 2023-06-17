@@ -62,12 +62,12 @@ public class AuthController {
     }
 
     @PostMapping("/auth")
-    public ResponseEntity<Object> register(@RequestBody AuthDto auth) throws NoSuchAlgorithmException {
+    public String register(@RequestBody AuthDto auth) throws NoSuchAlgorithmException {
         if (auth.getEmail() != null && auth.getSenha() != null) {
             Auth authEntity = repo.findByEmail(auth.getEmail());
 
             if (authEntity != null) {
-                return new ResponseEntity<>(new JsonResponse(false, "Email já cadastrado", null), HttpStatus.BAD_REQUEST);
+                return "E-MAIL JÁ USADO";
             }
 
             if (auth.getRole() == null) {
@@ -81,10 +81,10 @@ public class AuthController {
             auth.setSenha(encryptedPassword);
             repo.save(mapper.map(auth, Auth.class));
 
-            return new ResponseEntity<>(new JsonResponse(true, "Autenticação criada com sucesso", null), HttpStatus.OK);
+            return "SUCESSO";
         }
 
-        return new ResponseEntity<>("Criação da Autenticação falhou", HttpStatus.BAD_REQUEST);
+        return "FALHOU";
     }
 
     @DeleteMapping("/auth/{id}")

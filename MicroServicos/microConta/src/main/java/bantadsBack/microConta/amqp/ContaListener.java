@@ -27,11 +27,11 @@ public class ContaListener {
         //Query gerente com menos clientes
         long idGerenteMenosClientes = contaService.consultarGerenteMenosContas();
         dto.setIdGerente(idGerenteMenosClientes);
-        //salvar conta no banco
+        //Salvar conta no banco
         ContaDTO clienteDto = contaService.criarConta(dto);
-        //definir o dto da response
+        //Definir o dto da response
         ResponseDto rDto = new ResponseDto(SUCESSO);
-        //enviar mensagem para a fila do orquestrador
+        //Enviar mensagem para a fila do orquestrador
         rabbitTemplate.convertAndSend("fila-orquestrador-conta-criada",rDto);
         System.out.println("cliente criado com o id: "+dto.getClientId());
     }
