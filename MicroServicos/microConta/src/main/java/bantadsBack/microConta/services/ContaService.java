@@ -24,8 +24,10 @@ import java.util.Date;
 import java.time.Instant;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ContaService {
@@ -92,6 +94,15 @@ public class ContaService {
 
 
         return gerente;
+    }
+
+    public List<ConsultaGerenteDTO> consultarGerenteTelaInicialAdmin(){
+        // Tela Inicial de Admin
+        return gerenteRepositoryR
+                .consultaGerente()
+                .stream()
+                .map(e -> mapper.map(e, ConsultaGerenteDTO.class))
+                .collect(Collectors.toList());
     }
 
     public Long consultarGerenteMenosContas(){
