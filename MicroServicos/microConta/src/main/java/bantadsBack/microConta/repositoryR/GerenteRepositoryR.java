@@ -6,7 +6,10 @@ import bantadsBack.microConta.dtos.GerenteIDDto;
 import bantadsBack.microConta.models.modelR.GerenteR;
 import org.hibernate.mapping.Any;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -44,6 +47,25 @@ public interface GerenteRepositoryR extends JpaRepository<GerenteR, Long> {
             "ORDER BY COUNT(*) ASC, RANDOM() " +
             "LIMIT 1", nativeQuery = true)
     public Long gerenteComMenosClientes();
+
+
+    @Query(value = "SELECT id_gerente_conta " +
+            "FROM tb_conta " +
+            "GROUP BY id_gerente_conta " +
+            "ORDER BY COUNT(*) ASC " +
+            "OFFSET 1 LIMIT 1", nativeQuery = true)
+    public Long segundoGerenteComMenosClientes();
+
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE tb_conta SET id_gerente_conta = :novoGerenteId WHERE id_gerente_conta = :gerenteIdToDelete", nativeQuery = true)
+    void transferirClientesParaNovoGerente(@Param("gerenteIdToDelete") Long gerenteIdToDelete, @Param("novoGerenteId") Long novoGerenteId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM tb_gerente WHERE id_gerente = :gerenteIdToDelete", nativeQuery = true)
+    void deletarGerente(@Param("gerenteIdToDelete") Long gerenteIdToDelete);
 
 
 //    @Query(value = "SELECT g.nome_gerente, g.cpf_gerente, COUNT(c.client_id) AS numero_clientes, " +

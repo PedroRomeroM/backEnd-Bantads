@@ -1,9 +1,7 @@
 package bantadsbackend.microGerentes.amqp;
 
 
-import bantadsbackend.microGerentes.dto.GerenteDto;
-import bantadsbackend.microGerentes.dto.ResponseDto;
-import bantadsbackend.microGerentes.dto.Status;
+import bantadsbackend.microGerentes.dto.*;
 import bantadsbackend.microGerentes.service.GerenteService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -26,5 +24,14 @@ public class GerenteListener {
         ResponseDto rDto = gerenteService.createGerente(dto);
         //enviar mensagem para a fila do orquestrador
         rabbitTemplate.convertAndSend("fila-orquestrador-gerente-criado",rDto);
+    }
+
+    @RabbitListener(queues = "excluir-gerente")
+    public void receberMensagensExcluirGerente(EGerenteDto dto){
+        //Deletar se houver mais de um gerente
+        EResponseDto status = gerenteService.deleteGerente(dto.getCpf());
+
+        //enviar mensagem para a fila do orquestrador
+        rabbitTemplate.convertAndSend("gerente-excluido",status);
     }
 }

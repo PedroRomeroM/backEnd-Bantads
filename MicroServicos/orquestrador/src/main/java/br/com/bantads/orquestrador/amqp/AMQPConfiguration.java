@@ -19,6 +19,18 @@ public class AMQPConfiguration {
         return new Queue("criar-cliente",false);
     }
     @Bean
+    public Queue criarFilaGerenteExcluido(){
+        return new Queue("gerente-excluido",false);
+    }
+    @Bean
+    public Queue criarFilaExcluirGerente(){
+        return new Queue("excluir-gerente",false);
+    }
+    @Bean
+    public Queue criarFilaExcluirGerenteConta(){
+        return new Queue("excluir-gerente-conta",false);
+    }
+    @Bean
     public Queue criarFilaCriarGErente(){
         return new Queue("criar-gerente",false);
     }

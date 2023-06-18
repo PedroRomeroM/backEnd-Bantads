@@ -147,6 +147,17 @@ public class ContaService {
         return gerente;
     }
 
+    public Long consultarOSegundoGerenteMenosContas(){
+        // consultar o gerente com menos contas e pegar o id
+        Long gerente = gerenteRepositoryR.segundoGerenteComMenosClientes();
+        return gerente;
+    }
+
+    public void transferirContaAoExcluirGerente(Long gerente_antigo,Long gerente_novo){
+        gerenteRepositoryR.transferirClientesParaNovoGerente(gerente_antigo,gerente_novo);
+        gerenteRepositoryR.deletarGerente(gerente_antigo);
+    }
+
     public Long transferirConta(Long gerente_antigo,Long gerente_novo){
         return gerenteRepositoryR.substituirGerente(gerente_novo,gerente_antigo);
     }

@@ -1,9 +1,6 @@
 package bantadsbackend.microGerentes.service;
 
-import bantadsbackend.microGerentes.dto.GerenteDto;
-import bantadsbackend.microGerentes.dto.GerenteEditarDTO;
-import bantadsbackend.microGerentes.dto.ResponseDto;
-import bantadsbackend.microGerentes.dto.Status;
+import bantadsbackend.microGerentes.dto.*;
 import bantadsbackend.microGerentes.model.Gerente;
 import bantadsbackend.microGerentes.model.GerenteEditar;
 import bantadsbackend.microGerentes.repository.GerenteEditarRepository;
@@ -35,7 +32,16 @@ public class GerenteService {
                 .collect(Collectors.toList());
     }
 
-    public void deleteGerente (int gerenteId){ gerenteRepository.deleteById(gerenteId); }
+    public EResponseDto deleteGerente (String cpf){
+        //Verificar se existe mais de um gerente
+        Integer numeroDeGerentes =  gerenteRepository.verificarGerentes();
+        Integer idGerente =  gerenteRepository.getGerenteId(cpf);
+        if(numeroDeGerentes > 1){
+            gerenteRepository.deleteById(idGerente);
+            return new EResponseDto(true,idGerente);
+        }
+        return new EResponseDto(false,idGerente);
+    }
 
     public ResponseDto createGerente(GerenteDto dto){
         Gerente gerente = modelMapperGerente.map(dto, Gerente.class);

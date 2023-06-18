@@ -1,6 +1,7 @@
 package bantadsBack.microConta.amqp;
 
 import bantadsBack.microConta.dtos.*;
+import bantadsBack.microConta.dtos.excluirGerente.IdGerenteDto;
 import bantadsBack.microConta.dtos.sagaCadastrarCliente.ResponseDto;
 import bantadsBack.microConta.services.ContaService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -39,5 +40,20 @@ public class GerenteListener {
             ResponseDto response = new ResponseDto(ERRO);
             rabbitTemplate.convertAndSend("novo-gerente-registrado-no-micro-de-contas",response);
         }
+    }
+
+    @RabbitListener(queues = "excluir-gerente-conta")
+    public void receberMensagensExcluirGerente(IdGerenteDto dto){
+        //Consultar gerente com menos contas
+        Long idGerenteMenosContas = contaService.consultarGerenteMenosContas();
+
+        //verificar se os ids não são iguais
+        if(idGerenteMenosContas == dto.getId().longValue()){
+            idGerenteMenosContas = contaService.consultarOSegundoGerenteMenosContas();
+        }
+
+        //Transferir clientes e deletar gerente
+        contaService.transferirContaAoExcluirGerente(dto.getId().longValue(),idGerenteMenosContas);
+
     }
 }

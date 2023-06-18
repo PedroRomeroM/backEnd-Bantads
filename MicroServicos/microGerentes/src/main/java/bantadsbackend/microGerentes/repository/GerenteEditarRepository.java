@@ -11,4 +11,5 @@ public interface GerenteEditarRepository extends JpaRepository<GerenteEditar, St
             "from gerentes " +
             "where cpf_gerente = :cpf_gerente", nativeQuery = true)
     GerenteEditar findByCpf(String cpf_gerente);
+
 }

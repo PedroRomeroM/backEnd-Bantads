@@ -49,11 +49,11 @@ public class GerenteCrudController {
         return ResponseEntity.status(HttpStatus.OK).body(gerenteService.passarInfoEditarGerente(cpf_gerente));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<GerenteDto> deleteGerente(@PathVariable @NotNull int id){
-        gerenteService.deleteGerente(id);
-
-        return ResponseEntity.noContent().build();
-    }
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<GerenteDto> deleteGerente(@PathVariable @NotNull int id){
+//        gerenteService.deleteGerente(id);
+//
+//        return ResponseEntity.noContent().build();
+//    }
 
 }
