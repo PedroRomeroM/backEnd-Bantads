@@ -54,6 +54,6 @@ public class GerenteListener {
 
         //Transferir clientes e deletar gerente
         contaService.transferirContaAoExcluirGerente(dto.getId().longValue(),idGerenteMenosContas);
-
+        //sdkolgflksdfg
     }
 }
