@@ -35,7 +35,7 @@ public class Gerente {
 
     @NotBlank
     @Size(min = 11, max = 20)
-    private String telefone_gerente;
+    private String telefoneGerente;
 
     @NotBlank
     private String senhaGerente;
