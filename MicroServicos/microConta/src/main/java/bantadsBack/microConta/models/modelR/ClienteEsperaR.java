@@ -22,4 +22,7 @@ public class ClienteEsperaR {
     @Column(name = "cpf_cliente")
     private String cpfCliente;
 
+    @Column(name = "salario_cliente")
+    private float salarioCliente;
+
 }

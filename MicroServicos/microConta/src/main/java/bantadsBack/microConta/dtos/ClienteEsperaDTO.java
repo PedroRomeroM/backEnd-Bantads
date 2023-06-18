@@ -13,5 +13,6 @@ public class ClienteEsperaDTO {
 
     private String nomeCliente;
     private String cpfCliente;
+    private float salarioCliente;
 
 }

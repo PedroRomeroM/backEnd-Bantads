@@ -13,6 +13,8 @@ public class ClienteTopDTO {
 
     private String nomeCliente;
     private String cpfCliente;
+    private String cidadeCliente;
+    private String estadoCliente;
     private String nomeGerente;
     private float saldoConta;
 

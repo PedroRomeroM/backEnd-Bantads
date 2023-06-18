@@ -22,6 +22,12 @@ public class ClienteTopR {
     @Column(name = "cpf_cliente")
     private String cpfCliente;
 
+    @Column(name = "cidade_cliente")
+    private String cidadeCliente;
+
+    @Column(name = "estado_cliente")
+    private String estadoCliente;
+
     @Column(name = "nome_gerente")
     private String nomeGerente;
 
