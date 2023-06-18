@@ -13,15 +13,6 @@ import org.springframework.stereotype.Component;
 public class OrchestratorInserirGerenteListener {
     @Autowired
     private RabbitTemplate rabbitTemplate;
-    @RabbitListener(queues = "fila-orquestrador-cliente-criado")
-    public void receberMensagensCliente(ClientReturnDto dto){
-        rabbitTemplate.convertAndSend("criar-conta",dto);
-        //TODO Verificar se o retorno foi sucesso u error (criar o status nas responses)
-    }
-    @RabbitListener(queues = "fila-orquestrador-conta-criada")
-    public void receberMensagensConta(ContaReturnDto dto){
-        //TODO se der certo passar pro micro de contas criar a conta e associar o gerente e criar o login no micro de auth;
-    }
     @RabbitListener(queues = "fila-orquestrador-gerente-criado")
     public void receberMensagensGerenteCriado(GerenteResponseDto dto){
         if(dto.getStatus() == Status.SUCESSO) {

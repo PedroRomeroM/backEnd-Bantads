@@ -1,5 +1,6 @@
 package bantadsBackEnd.microAuth.controller;
 
+import bantadsBackEnd.microAuth.amqp.Status;
 import bantadsBackEnd.microAuth.dto.AuthDto;
 import bantadsBackEnd.microAuth.enums.Role;
 import bantadsBackEnd.microAuth.model.Auth;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
+
+import static bantadsBackEnd.microAuth.amqp.Status.ERRO;
+import static bantadsBackEnd.microAuth.amqp.Status.SUCESSO;
 
 
 @RestController
@@ -62,12 +66,12 @@ public class AuthController {
     }
 
     @PostMapping("/auth")
-    public String register(@RequestBody AuthDto auth) throws NoSuchAlgorithmException {
+    public Status register(@RequestBody AuthDto auth) throws NoSuchAlgorithmException {
         if (auth.getEmail() != null && auth.getSenha() != null) {
             Auth authEntity = repo.findByEmail(auth.getEmail());
 
             if (authEntity != null) {
-                return "E-MAIL JÁ USADO";
+                return ERRO;
             }
 
             if (auth.getRole() == null) {
@@ -81,10 +85,10 @@ public class AuthController {
             auth.setSenha(encryptedPassword);
             repo.save(mapper.map(auth, Auth.class));
 
-            return "SUCESSO";
+            return SUCESSO;
         }
 
-        return "FALHOU";
+        return ERRO;
     }
 
     @DeleteMapping("/auth/{id}")
