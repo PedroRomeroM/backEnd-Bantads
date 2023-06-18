@@ -20,8 +20,8 @@ public class EnviarEmail {
               
         boolean retorno = false;
         
-        final String username = "melhorlavanderiadomundo@gmail.com";
-        final String password = "hkkoxxfwnnniycmg";
+        final String username = "bantads50@gmail.com";
+        final String password = "bantadsbantads";
         
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "smtp.gmail.com");
@@ -30,7 +30,7 @@ public class EnviarEmail {
         prop.put("mail.smtp.auth", "true");
         prop.setProperty("mail.smtp.starttls.enable", "true");
         prop.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
-        prop.put("mail.smtp.starttls.enable", "true"); //TLS
+        prop.put("mail.smtp.starttls.enable", "true");
         
         jakarta.mail.Session session = jakarta.mail.Session.getInstance(prop,
                 new jakarta.mail.Authenticator() {
@@ -42,7 +42,7 @@ public class EnviarEmail {
 
         try {
             jakarta.mail.Message message = new jakarta.mail.internet.MimeMessage(session);
-            message.setFrom(new jakarta.mail.internet.InternetAddress("melhorlavanderiadomundo@gmail.com"));
+            message.setFrom(new jakarta.mail.internet.InternetAddress("bantads50@gmail.com"));
             message.setRecipients(
                     jakarta.mail.Message.RecipientType.TO,
                     jakarta.mail.internet.InternetAddress.parse(emailDestinatario)

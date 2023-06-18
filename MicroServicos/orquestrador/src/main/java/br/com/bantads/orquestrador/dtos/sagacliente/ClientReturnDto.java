@@ -10,4 +10,5 @@ public class ClientReturnDto {
     private String nomeCliente;
     private String cpfCliente;
     private float salarioCliente;
+    private String emailCliente;
 }
