@@ -23,7 +23,7 @@ public class ClienteListener {
         //salvar no banco
         int clientId = clienteService.createCliente(dto);
         //definir o dto da response
-        ResponseDto rDto = new ResponseDto(clientId, dto.getNomeCliente(), dto.getCpfCliente(),dto.getSalarioCliente(),SUCESSO,dto.getEmailCliente());
+        ResponseDto rDto = new ResponseDto(clientId, dto.getNomeCliente(), dto.getCpfCliente(),dto.getSalarioCliente(),SUCESSO,dto.getEmailCliente(),dto.getCidadeCliente(),dto.getEstadoCliente());
         //enviar mensagem para a fila do orquestrador
         rabbitTemplate.convertAndSend("fila-orquestrador-cliente-criado",rDto);
         System.out.println("cliente criado com o id: "+clientId);

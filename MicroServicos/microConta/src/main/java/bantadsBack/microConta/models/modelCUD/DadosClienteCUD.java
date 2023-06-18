@@ -2,6 +2,7 @@ package bantadsBack.microConta.models.modelCUD;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,5 +27,16 @@ public class DadosClienteCUD {
     @NotBlank
     @Size(min = 11,max = 11)
     private String cpfCliente;
+
+    @NotNull
+    private float salarioCliente;
+
+    @NotBlank
+    @Size(max = 50)
+    private String cidadeCliente;
+
+    @NotBlank
+    @Size(min = 2,max = 2)
+    private String estadoCliente;
 
 }

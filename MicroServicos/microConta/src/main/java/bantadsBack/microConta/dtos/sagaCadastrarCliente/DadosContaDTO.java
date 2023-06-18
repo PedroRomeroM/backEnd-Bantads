@@ -11,4 +11,6 @@ public class DadosContaDTO {
     private String cpfCliente;
     private Long salarioCliente;
     private Long idGerente;
+    private String cidadeCliente;
+    private String estadoCliente;
 }

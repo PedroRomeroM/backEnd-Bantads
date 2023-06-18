@@ -1,5 +1,6 @@
 package bantadsBackEnd.microAuth.utils;
 
+import jakarta.mail.Transport;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -51,6 +52,8 @@ public class EnviarEmail {
             message.setSubject("Login e senha Bantads");
             message.setText("Olá " + nomeDestinatario + "!\n\nSegue abaixo seu login e senha para acesso ao nosso sistema:\n\nLogin: " + emailDestinatario 
                     + "\nSenha: " + senhaDestinatario + "\n\nConfirme seus dados:\n");
+            Transport transport = session.getTransport("smtp");
+            transport.connect();
             jakarta.mail.Transport.send(message);
             System.out.println("Done");
             retorno = true;

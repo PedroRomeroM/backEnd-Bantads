@@ -2,6 +2,9 @@ CREATE TABLE tb_cliente(
     client_id INTEGER,
     nome_cliente VARCHAR(255),
     cpf_cliente VARCHAR(11),
+    salario_cliente NUMERIC,
+    cidade_cliente varchar(50),
+    estado_cliente varchar(2),
 
 
     CONSTRAINT pk_cliente PRIMARY KEY (client_id)

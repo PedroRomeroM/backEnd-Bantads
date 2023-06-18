@@ -43,6 +43,11 @@ public class LoginListener {
         enviarEmail.setEmailDestinatario(dto.getEmail());
         enviarEmail.setNomeDestinatario(dto.getNome());
         enviarEmail.setSenhaDestinatario(dto.getSenha());
-        enviarEmail.enviarGmail();
+        try {
+            enviarEmail.enviarGmail();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
     }
 }
