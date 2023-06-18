@@ -20,4 +20,5 @@ public class GerenteEditarDTO {
     private String emailGerente;
     private String cpfGerente;
     private String telefoneGerente;
+    private String senhaGerente;
 }
