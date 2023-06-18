@@ -1,6 +1,7 @@
 package bantadsBack.microConta.controllers;
 
 
+import bantadsBack.microConta.dtos.ClienteConsultaDTO;
 import bantadsBack.microConta.dtos.ConsultaGerenteDTO;
 import bantadsBack.microConta.dtos.sagaCadastrarCliente.ContaDTO;
 import bantadsBack.microConta.repositoryCUD.ContaRepositoryCUD;
@@ -46,6 +47,13 @@ public class ContaController {
     public ResponseEntity<List<ConsultaGerenteDTO>> telaInicialAdmin(){
 
         List<ConsultaGerenteDTO> i = contaService.consultarGerenteTelaInicialAdmin();
+        return ResponseEntity.status(HttpStatus.OK).body(i);
+    }
+
+    @GetMapping("/cliente")
+    public ResponseEntity<List<ClienteConsultaDTO>> telaConsultaClienteAdmin(){
+
+        List<ClienteConsultaDTO> i = contaService.consultarClientesAdmin();
         return ResponseEntity.status(HttpStatus.OK).body(i);
     }
 

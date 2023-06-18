@@ -9,35 +9,24 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "gerentes")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Gerente {
-
+public class GerenteEditar {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer gerenteId;
-
-    @NotBlank
-    @Size(max = 255)
+    @Column(name = "nome_gerente")
     private String nomeGerente;
 
-    @NotBlank
-    @Size(max = 255)
+    @Column(name = "email_gerente")
     private String emailGerente;
 
-    @NotBlank
-    @Size(min = 11, max = 11)
+    @Column(name = "cpf_gerente")
     private String cpfGerente;
 
-    @NotBlank
-    @Size(min = 11, max = 20)
+    @Column(name = "telefone_gerente")
     private String telefone_gerente;
 
-    @NotBlank
-    private String senhaGerente;
-
 }
+

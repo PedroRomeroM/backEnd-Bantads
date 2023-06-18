@@ -12,10 +12,7 @@ import bantadsBack.microConta.models.modelR.ContaR;
 import bantadsBack.microConta.repositoryCUD.ContaRepositoryCUD;
 import bantadsBack.microConta.repositoryCUD.DadosClienteRepository;
 import bantadsBack.microConta.repositoryCUD.DadosGerenteRepository;
-import bantadsBack.microConta.repositoryR.ClienteRepositoryR;
-import bantadsBack.microConta.repositoryR.ContaRepositoryR;
-import bantadsBack.microConta.repositoryR.GerenteRepositoryConsulta;
-import bantadsBack.microConta.repositoryR.GerenteRepositoryR;
+import bantadsBack.microConta.repositoryR.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +34,10 @@ public class ContaService {
     private ContaRepositoryCUD repositoryCUD;
 
     @Autowired
-    private GerenteRepositoryConsulta gerenteRepositoryConsulta;
+    private GerenteConsultaRepositoryR gerenteRepositoryConsulta;
+
+    @Autowired
+    private ClienteConsultaRepositoryR clienteConsultaRepositoryR;
     @Autowired
     private ContaRepositoryR repositoryR;
 
@@ -97,6 +97,15 @@ public class ContaService {
 
 
         return gerente;
+    }
+
+    public List<ClienteConsultaDTO> consultarClientesAdmin(){
+        // Tela Inicial de Admin
+        return clienteConsultaRepositoryR
+                .consultaCliente()
+                .stream()
+                .map(e -> mapper.map(e, ClienteConsultaDTO.class))
+                .collect(Collectors.toList());
     }
 
     public List<ConsultaGerenteDTO> consultarGerenteTelaInicialAdmin(){

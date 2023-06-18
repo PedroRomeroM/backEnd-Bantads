@@ -1,6 +1,7 @@
 package bantadsbackend.microGerentes.controller;
 
 import bantadsbackend.microGerentes.dto.GerenteDto;
+import bantadsbackend.microGerentes.dto.GerenteEditarDTO;
 import bantadsbackend.microGerentes.service.GerenteService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -35,11 +36,17 @@ public class GerenteCrudController {
 //
 //    }
 
-    @PutMapping
-    public ResponseEntity<GerenteDto> updateGerente(@PathVariable @NotNull int id, @RequestBody @Valid GerenteDto dto){
-        GerenteDto updated = gerenteService.updateGerente(id, dto);
+    @PutMapping("/manager/{cpfGerente}")
+    public ResponseEntity<GerenteDto> updateGerente(@PathVariable @NotNull String cpfGerente, @RequestBody @Valid GerenteDto dto){
+        GerenteDto updated = gerenteService.updateGerente(cpfGerente, dto);
 
         return ResponseEntity.ok(updated);
+    }
+
+    @GetMapping("/busca/{cpf_gerente}")
+    public ResponseEntity<GerenteEditarDTO> gerenteParaEditar(@PathVariable @NotNull String cpf_gerente){
+
+        return ResponseEntity.status(HttpStatus.OK).body(gerenteService.passarInfoEditarGerente(cpf_gerente));
     }
 
     @DeleteMapping("/{id}")
