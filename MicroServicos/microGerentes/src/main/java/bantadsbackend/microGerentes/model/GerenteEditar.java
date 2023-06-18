@@ -26,7 +26,10 @@ public class GerenteEditar {
     private String cpfGerente;
 
     @Column(name = "telefone_gerente")
-    private String telefone_gerente;
+    private String telefoneGerente;
+
+    @Column(name = "senha_gerente")
+    private String senhaGerente;
 
 }
 
