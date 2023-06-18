@@ -54,6 +54,12 @@ public class ContaService {
     private GerenteRepositoryR gerenteRepositoryR;
 
     @Autowired
+    private ClienteEsperaRepositoryR clienteEsperaRepositoryR;
+
+    @Autowired
+    private ClienteTopRepositoryR clienteTopRepositoryR;
+
+    @Autowired
     private ModelMapper mapper;
 
     public ContaDTO criarConta(DadosContaDTO clienteConta) {
@@ -105,6 +111,24 @@ public class ContaService {
                 .consultaCliente()
                 .stream()
                 .map(e -> mapper.map(e, ClienteConsultaDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    public List<ClienteEsperaDTO> consultarClientesEsperando(){
+        // Tela Inicial de Manager
+        return clienteEsperaRepositoryR
+                .todosClientesEsperando()
+                .stream()
+                .map(e -> mapper.map(e, ClienteEsperaDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    public List<ClienteTopDTO> consultarTopClientes(){
+        // Tela Inicial de Manager
+        return clienteTopRepositoryR
+                .topClientes()
+                .stream()
+                .map(e -> mapper.map(e, ClienteTopDTO.class))
                 .collect(Collectors.toList());
     }
 
