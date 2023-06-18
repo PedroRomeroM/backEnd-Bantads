@@ -20,9 +20,9 @@ public class GerarSenha {
         return sb.toString();
     }
 
-    public static String encrypt() throws NoSuchAlgorithmException {
+    public static String encrypt(String senha) throws NoSuchAlgorithmException {
 
-        String password = generateRandomPassword(8);
+        String password = senha;
         String salt = generateRandomPassword(8);
 
         String saltedPassword = password + salt;
@@ -37,17 +37,17 @@ public class GerarSenha {
         return sb.toString()+"?"+salt;
     }
 
-    public static String extractPassword() throws NoSuchAlgorithmException {
-        String texto = encrypt();
+//    public static String extractPassword() throws NoSuchAlgorithmException {
+//        String texto = encrypt();
+//
+//        int posicaoInterrogacao = texto.indexOf("?"); // Encontra a posição do caractere "?"
+//        String extractedPassword = texto.substring(0, posicaoInterrogacao); // Extrai a substring até o caractere "?"
+//
+//        return extractedPassword;
+//    }
 
-        int posicaoInterrogacao = texto.indexOf("?"); // Encontra a posição do caractere "?"
-        String extractedPassword = texto.substring(0, posicaoInterrogacao); // Extrai a substring até o caractere "?"
-
-        return extractedPassword;
-    }
-
-    public static String extractSalt() throws NoSuchAlgorithmException {
-        String texto = encrypt();
+    public static String extractSalt(String senhaSaltada) throws NoSuchAlgorithmException {
+        String texto = senhaSaltada;
 
         int posicaoInterrogacao = texto.indexOf("?"); // Encontra a posição do caractere "?"
         String extractedSalt = texto.substring(posicaoInterrogacao + 1); // Extrai a substring após o caractere "?"

@@ -25,7 +25,8 @@ public class LoginListener {
     @RabbitListener(queues = "criar-login")
     public void receberMensagens(AuthDto dto) {
         //GERAR SENHA ALEATORIA DE 8 DIGITOS E SETAR NO DTO
-        dto.setSenha(GerarSenha.generateRandomPassword(8));
+        String senha = GerarSenha.generateRandomPassword(8);
+        dto.setSenha(senha);
 
         try {
             //SALVAR OS DADOS DE LOGIN NO BANCO
@@ -34,20 +35,25 @@ public class LoginListener {
             ResponseDto rdto = new ResponseDto(status);
             //enviar mensagem para a fila do orquestrador
             rabbitTemplate.convertAndSend("fila-orquestrador-login-criado", rdto);
+
+            if(status != ERRO) {
+                //PREPARAR O E-MAIL
+                EnviarEmail enviarEmail = new EnviarEmail();
+                enviarEmail.setEmailDestinatario(dto.getEmail());
+                enviarEmail.setNomeDestinatario(dto.getNome());
+                enviarEmail.setSenhaDestinatario(senha);
+
+                try {
+                    enviarEmail.enviarGmail();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+
         }catch (Exception e){
             ResponseDto rdto = new ResponseDto(ERRO);
             rabbitTemplate.convertAndSend("fila-orquestrador-login-criado", rdto);
         }
-        //PREPARAR O E-MAIL
-        EnviarEmail enviarEmail = new EnviarEmail();
-        enviarEmail.setEmailDestinatario(dto.getEmail());
-        enviarEmail.setNomeDestinatario(dto.getNome());
-        enviarEmail.setSenhaDestinatario(dto.getSenha());
-        try {
-            enviarEmail.enviarGmail();
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
+
     }
 }

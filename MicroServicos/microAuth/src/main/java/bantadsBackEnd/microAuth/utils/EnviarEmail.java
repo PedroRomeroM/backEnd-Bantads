@@ -21,8 +21,8 @@ public class EnviarEmail {
               
         boolean retorno = false;
         
-        final String username = "bantads50@gmail.com";
-        final String password = "bantadsbantads";
+        final String username = "bancobantads@gmail.com";
+        final String password = "vrftgryvbjyixtee";
         
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "smtp.gmail.com");
@@ -43,7 +43,7 @@ public class EnviarEmail {
 
         try {
             jakarta.mail.Message message = new jakarta.mail.internet.MimeMessage(session);
-            message.setFrom(new jakarta.mail.internet.InternetAddress("bantads50@gmail.com"));
+            message.setFrom(new jakarta.mail.internet.InternetAddress("bancobantads@gmail.com"));
             message.setRecipients(
                     jakarta.mail.Message.RecipientType.TO,
                     jakarta.mail.internet.InternetAddress.parse(emailDestinatario)

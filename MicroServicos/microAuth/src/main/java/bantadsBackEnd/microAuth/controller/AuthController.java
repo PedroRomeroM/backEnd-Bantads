@@ -42,7 +42,8 @@ public class AuthController {
         }
 
         Auth authEntity = repo.findByEmail(email);
-        String salt = GerarSenha.extractSalt();
+
+        String salt = GerarSenha.extractSalt(authEntity.getSenha());
 
         if (authEntity == null) {
             return new ResponseEntity<>(new JsonResponse(false, "Email não registrado", null), HttpStatus.NOT_FOUND);
@@ -78,11 +79,11 @@ public class AuthController {
                 auth.setRole(String.valueOf(Role.CLIENTE));
             }
 
-            String password = auth.getSenha();
-            String saltValue = GerarSenha.extractSalt();
-            String encryptedPassword = GerarSenha.encrypt();
+            String password = GerarSenha.encrypt(auth.getSenha());
+            String saltValue = GerarSenha.extractSalt(password);
 
-            auth.setSenha(encryptedPassword);
+
+            auth.setSenha(password);
             repo.save(mapper.map(auth, Auth.class));
 
             return SUCESSO;
