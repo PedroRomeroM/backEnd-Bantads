@@ -49,7 +49,7 @@ public class AuthController {
             return new ResponseEntity<>(new JsonResponse(false, "Email não registrado", null), HttpStatus.NOT_FOUND);
         }
 
-        Boolean isPasswordCorrect = GerarSenha.verifyUserPassword(authEntity.getSenha(), password, salt);
+        Boolean isPasswordCorrect = GerarSenha.verifyUserPassword(password, salt,authEntity.getSenha());
 
         if (auth.getEmail().equals(authEntity.getEmail())
                 && isPasswordCorrect) {

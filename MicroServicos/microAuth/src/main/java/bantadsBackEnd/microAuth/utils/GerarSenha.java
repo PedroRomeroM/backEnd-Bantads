@@ -69,7 +69,7 @@ public class GerarSenha {
             sb.append(String.format("%02x", hashedByte));
         }
 
-        if (sb.toString().equals(hash)){
+        if ((sb.toString()+"?"+salt).equals(hash)){
             return true;
         }
         return false;
