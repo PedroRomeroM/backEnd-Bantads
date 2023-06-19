@@ -1,8 +1,10 @@
 package br.com.bantads.orquestrador.sagas.cadastroGerente;
 
+import br.com.bantads.orquestrador.dtos.Role;
 import br.com.bantads.orquestrador.dtos.sagacliente.ClientReturnDto;
 import br.com.bantads.orquestrador.dtos.sagacliente.ContaReturnDto;
 import br.com.bantads.orquestrador.dtos.sagainserirgerente.GerenteResponseDto;
+import br.com.bantads.orquestrador.dtos.sagainserirgerente.LoginGerenteDto;
 import br.com.bantads.orquestrador.dtos.sagainserirgerente.Status;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OrchestratorInserirGerenteListener {
+
+    private String emailGerente;
     @Autowired
     private RabbitTemplate rabbitTemplate;
     @RabbitListener(queues = "fila-orquestrador-gerente-criado")
@@ -25,7 +29,8 @@ public class OrchestratorInserirGerenteListener {
     @RabbitListener(queues = "novo-gerente-registrado-no-micro-de-contas")
     public void receberMensagemDaContaCriada(GerenteResponseDto dto){
         if(dto.getStatus() == Status.SUCESSO) {
-            rabbitTemplate.convertAndSend("registrar-novo-gerente-no-micro-contas", dto);
+            LoginGerenteDto loginGerenteDto = new LoginGerenteDto(dto.getEmailGerente(),dto.getNomeGerente(), "GERENTE",dto.getSenha());
+            rabbitTemplate.convertAndSend("registrar-novo-gerente-no-micro-login", loginGerenteDto);
         }else {
             //TODO remover gerente criado no micro de gerente;
             //TODO remover gerente do micro de conta;

@@ -39,6 +39,10 @@ public class AMQPConfiguration {
         return new Queue("criar-login",false);
     }
     @Bean
+    public Queue criarFilaCriarGerenteLogin(){
+        return new Queue("registrar-novo-gerente-no-micro-login",false);
+    }
+    @Bean
     public Queue criarFilaConsultarGerente(){
         return new Queue("consultar-gerente",false);
     }

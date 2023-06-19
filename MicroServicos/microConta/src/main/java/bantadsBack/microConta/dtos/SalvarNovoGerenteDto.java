@@ -13,4 +13,6 @@ public class SalvarNovoGerenteDto {
     private String nomeGerente;
     private String cpfGerente;
     private Status status;
+    private String emailGerente;
+    private String senha;
 }

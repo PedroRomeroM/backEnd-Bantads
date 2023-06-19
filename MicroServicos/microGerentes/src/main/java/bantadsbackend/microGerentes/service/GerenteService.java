@@ -46,7 +46,7 @@ public class GerenteService {
     public ResponseDto createGerente(GerenteDto dto){
         Gerente gerente = modelMapperGerente.map(dto, Gerente.class);
         gerenteRepository.save(gerente);
-        ResponseDto rDto = new ResponseDto(gerente.getGerenteId(),gerente.getNomeGerente(),gerente.getCpfGerente(), Status.SUCESSO);
+        ResponseDto rDto = new ResponseDto(gerente.getGerenteId(),gerente.getNomeGerente(),gerente.getCpfGerente(), Status.SUCESSO,dto.getEmailGerente(),dto.getSenhaGerente());
         return rDto;
     }
 

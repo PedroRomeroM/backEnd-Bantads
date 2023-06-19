@@ -33,7 +33,7 @@ public class GerenteListener {
             Long idDoGerenteComMaisContas = contaService.consultarGerente();
             //2º - Pegar uma conta aleatória associada a esse gerente e substituir para o novo gerente
             Long rDto = contaService.transferirConta(idDoGerenteComMaisContas,dto.getGerenteId());
-            ResponseDto response = new ResponseDto(SUCESSO);
+            GerenteResponseDto response = new GerenteResponseDto(dto.getGerenteId(),dto.getNomeGerente(),dto.getCpfGerente(),SUCESSO,dto.getEmailGerente(),dto.getSenha());
             //3º - Retornar o id da conta e uma mensagem de sucesso
             rabbitTemplate.convertAndSend("novo-gerente-registrado-no-micro-de-contas",response);
         }catch (Exception e){

@@ -56,4 +56,13 @@ public class LoginListener {
         }
 
     }
+
+    @RabbitListener(queues = "registrar-novo-gerente-no-micro-login")
+    public void receberMensagensLoginGerente(AuthDto dto) {
+        try{
+            authController.register(dto);
+        }catch(Exception e){
+            //todo
+        }
+    }
 }
