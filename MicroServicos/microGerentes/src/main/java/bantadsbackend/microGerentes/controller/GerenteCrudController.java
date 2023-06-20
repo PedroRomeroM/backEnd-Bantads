@@ -3,16 +3,14 @@ package bantadsbackend.microGerentes.controller;
 import bantadsbackend.microGerentes.dto.GerenteDto;
 import bantadsbackend.microGerentes.dto.GerenteEditarDTO;
 import bantadsbackend.microGerentes.service.GerenteService;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/gerentes")
@@ -37,8 +35,9 @@ public class GerenteCrudController {
 //    }
 
     @PutMapping("/manager/{cpfGerente}")
-    public ResponseEntity<GerenteDto> updateGerente(@PathVariable @NotNull String cpfGerente, @RequestBody GerenteDto dto){
-        GerenteDto updated = gerenteService.updateGerente(cpfGerente, dto);
+    public ResponseEntity<Object> updateGerente(@PathVariable @NotNull String cpfGerente, @RequestBody GerenteDto dto){
+        Integer updated = gerenteService.updateGerente(cpfGerente, dto);
+
 
         return ResponseEntity.ok(updated);
     }

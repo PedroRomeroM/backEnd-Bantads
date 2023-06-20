@@ -49,14 +49,12 @@ public class GerenteService {
         ResponseDto rDto = new ResponseDto(gerente.getGerenteId(),gerente.getNomeGerente(),gerente.getCpfGerente(), Status.SUCESSO,dto.getEmailGerente(),dto.getSenhaGerente());
         return rDto;
     }
+    public Integer updateGerente(String cpfGerente, GerenteDto dto) {
 
-    public GerenteDto updateGerente(String cpfGerente, GerenteDto dto) {
+        Integer gerenteId = gerenteRepository.getGerenteId(cpfGerente);
+        Integer update = gerenteRepository.updateGerente(dto.getNomeGerente(),dto.getTelefoneGerente(), dto.getEmailGerente(), Long.valueOf(gerenteId));
 
-        Gerente gerente = modelMapperGerente.map(dto, Gerente.class);
-        gerente.setCpfGerente(cpfGerente);
-        gerente = gerenteRepository.save(gerente);
-
-        return modelMapperGerente.map(gerente, GerenteDto.class);
+        return update;
     }
 
     public GerenteEditarDTO passarInfoEditarGerente(String cpf){

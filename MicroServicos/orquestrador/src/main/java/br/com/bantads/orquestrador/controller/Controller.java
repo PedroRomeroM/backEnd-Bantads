@@ -31,7 +31,7 @@ public class Controller {
         return sagaInserirGerente.start(dto,rabbitTemplate);
     }
 
-    @DeleteMapping("/{cpf}")
+    @DeleteMapping("/delete/{cpf}")
     public ResponseEntity<Object> deleteCliente(@PathVariable @NotNull String cpf) {
         SagaExcluirGerente sagaExcluirGerente = new SagaExcluirGerente();
         return sagaExcluirGerente.start(cpf,rabbitTemplate);

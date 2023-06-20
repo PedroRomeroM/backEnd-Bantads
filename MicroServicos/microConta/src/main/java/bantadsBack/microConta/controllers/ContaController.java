@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -43,10 +44,10 @@ public class ContaController {
             try{
                 ContaDTO contaDTO = movimentacaoService.findClienteIdByCpf(cpf);
 
-                if(dto.getAmmount() > 0) {
+                if(dto.getAmmount() >= 0) {
                     contaDTO.setSaldoConta((contaDTO.getSaldoConta() + dto.getAmmount()));
                 }else {
-                    if(contaDTO.getSaldoConta() > Math.abs(dto.getAmmount())){
+                    if(contaDTO.getSaldoConta() + (contaDTO.getLimiteConta()) >= Math.abs(dto.getAmmount())){
                         contaDTO.setSaldoConta(contaDTO.getSaldoConta() + dto.getAmmount());
                     }else {
                         return new ResponseEntity<>("Saldo Insuficiente", HttpStatus.BAD_REQUEST);
@@ -62,6 +63,30 @@ public class ContaController {
             }
         return null;
     }
+
+    @PutMapping(value = "/transfer/{cpfOrigem}/{cpfDestino}")
+    public ResponseEntity<List<ContaDTO>> transferir(@PathVariable("cpfOrigem") String cpfOrigem, @PathVariable("cpfDestino") String cpfDestino ,@RequestBody MovimentacaoDto dto) {
+
+        ContaDTO contaOrigem = movimentacaoService.findClienteIdByCpf(cpfOrigem);
+        ContaDTO contaDestino = movimentacaoService.findClienteIdByCpf(cpfDestino);
+
+        if(dto.getAmmount() > 0){
+            contaOrigem.setSaldoConta(contaOrigem.getSaldoConta() - dto.getAmmount());
+            contaDestino.setSaldoConta(contaDestino.getSaldoConta() + dto.getAmmount());
+
+            ContaDTO contaOrigemAtualizada = contaService.updateConta(contaOrigem);
+            ContaDTO contaDestinoAtualizada = contaService.updateConta(contaDestino);
+
+            List<ContaDTO> list = new ArrayList<>();
+            list.add(contaOrigemAtualizada);
+            list.add(contaDestinoAtualizada);
+
+            return ResponseEntity.ok().body(list);
+        }
+
+        return null;
+    }
+
 
     @GetMapping("/admin")
     public ResponseEntity<List<ConsultaGerenteDTO>> telaInicialAdmin(){
@@ -81,6 +106,21 @@ public class ContaController {
     public ResponseEntity<List<ClienteEsperaDTO>> telaInicialManager(){
 
         List<ClienteEsperaDTO> i = contaService.consultarClientesEsperando();
+        return ResponseEntity.status(HttpStatus.OK).body(i);
+    }
+
+    @GetMapping("/cliente/inicial/{cpf}")
+    public ResponseEntity<ClienteInicialDTO> getInitialScreenCliente(@PathVariable("cpf") String cpf){
+
+        ClienteInicialDTO i = contaService.consultarClienteInicial(cpf);
+
+        return ResponseEntity.status(HttpStatus.OK).body(i);
+    }
+
+    @GetMapping("/cliente/situacao/{cpf}")
+    public ResponseEntity<ClienteSituacaoDTO> checkClientSituation(@PathVariable("cpf") String cpf){
+
+        ClienteSituacaoDTO i = contaService.consultarSituacaoConta(cpf);
         return ResponseEntity.status(HttpStatus.OK).body(i);
     }
 
