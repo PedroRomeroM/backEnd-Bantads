@@ -17,18 +17,21 @@ public class OrchestratorAutoCadastroListener {
     private String nome;
     private String role;
     private String senha;
+    private String cpf;
 
     @RabbitListener(queues = "fila-orquestrador-cliente-criado")
     public void receberMensagensCliente(ClientReturnDto dto){
         rabbitTemplate.convertAndSend("criar-conta",dto);
         this.email = dto.getEmailCliente();
         this.nome = dto.getNomeCliente();
+        this.cpf = dto.getCpfCliente();
     }
     @RabbitListener(queues = "fila-orquestrador-conta-criada")
     public void receberMensagensConta(ContaReturnDto dto){
         LoginDto loginDto = new LoginDto();
         loginDto.setEmail(this.email);
         loginDto.setNome(this.nome);
+        loginDto.setCpf(this.cpf);
         rabbitTemplate.convertAndSend("criar-login",loginDto);
     }
     @RabbitListener(queues = "fila-orquestrador-login-criado")

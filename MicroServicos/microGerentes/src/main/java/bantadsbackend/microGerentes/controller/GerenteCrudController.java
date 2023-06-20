@@ -37,7 +37,7 @@ public class GerenteCrudController {
 //    }
 
     @PutMapping("/manager/{cpfGerente}")
-    public ResponseEntity<GerenteDto> updateGerente(@PathVariable @NotNull String cpfGerente, @RequestBody @Valid GerenteDto dto){
+    public ResponseEntity<GerenteDto> updateGerente(@PathVariable @NotNull String cpfGerente, @RequestBody GerenteDto dto){
         GerenteDto updated = gerenteService.updateGerente(cpfGerente, dto);
 
         return ResponseEntity.ok(updated);

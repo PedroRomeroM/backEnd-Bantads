@@ -1,10 +1,7 @@
 package bantadsBack.microConta.controllers;
 
 
-import bantadsBack.microConta.dtos.ClienteConsultaDTO;
-import bantadsBack.microConta.dtos.ClienteEsperaDTO;
-import bantadsBack.microConta.dtos.ClienteTopDTO;
-import bantadsBack.microConta.dtos.ConsultaGerenteDTO;
+import bantadsBack.microConta.dtos.*;
 import bantadsBack.microConta.dtos.sagaCadastrarCliente.ContaDTO;
 import bantadsBack.microConta.repositoryCUD.ContaRepositoryCUD;
 import bantadsBack.microConta.repositoryR.ContaRepositoryR;
@@ -16,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -34,16 +32,36 @@ public class ContaController {
     @Autowired
     private ContaRepositoryCUD contaRepositoryCUD;
 
+    @GetMapping
+    public ResponseEntity<List<ContaDTO>> listAll(){
 
-//    @PutMapping(value = "/conta/{id}")
-//    public ResponseEntity<ContaDTO> updateConta(@PathVariable("id") Long id, @RequestBody ContaDTO account) throws Exception {
-//        try{
-//            ContaDTO contaAtualizada = contaService.updateConta(id, account);
-//            return ResponseEntity.ok().body(contaAtualizada);
-//        }catch (Exception e) {
-//            throw new Exception(e);
-//        }
-//    }
+        return ResponseEntity.status(HttpStatus.OK).body(contaService.selectAllContas());
+    }
+    @PutMapping(value = "/deposit/{cpf}")
+    public ResponseEntity<Object> updateSaldo(@PathVariable("cpf") String cpf, @RequestBody MovimentacaoDto dto) {
+
+            try{
+                ContaDTO contaDTO = movimentacaoService.findClienteIdByCpf(cpf);
+
+                if(dto.getAmmount() > 0) {
+                    contaDTO.setSaldoConta((contaDTO.getSaldoConta() + dto.getAmmount()));
+                }else {
+                    if(contaDTO.getSaldoConta() > Math.abs(dto.getAmmount())){
+                        contaDTO.setSaldoConta(contaDTO.getSaldoConta() + dto.getAmmount());
+                    }else {
+                        return new ResponseEntity<>("Saldo Insuficiente", HttpStatus.BAD_REQUEST);
+                    }
+                }
+                try {
+                    ContaDTO contaAtualizada = contaService.updateConta(contaDTO);
+                    return ResponseEntity.ok().body(contaAtualizada);
+                }catch(Exception e){}
+
+            } catch (NoSuchElementException e) {
+                return new ResponseEntity<>("Cliente Não encontrado", HttpStatus.BAD_REQUEST);
+            }
+        return null;
+    }
 
     @GetMapping("/admin")
     public ResponseEntity<List<ConsultaGerenteDTO>> telaInicialAdmin(){

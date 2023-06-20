@@ -14,15 +14,11 @@ import java.util.Date;
 public class ContaDTO {
 
     private Long idConta;
-    private BigDecimal saldoConta;
-    private BigDecimal limiteConta;
-    private Long clientId;
+    private float saldoConta;
+    private float limiteConta;
+    private Long idCliente; //todo
     private String situacaoConta;
     private Date dataCriacaoConta;
     private String nomeGerente;
     private Long idGerente;
-
-
-
-
 }

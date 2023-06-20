@@ -7,7 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface DadosClienteRepository extends JpaRepository<DadosClienteCUD, Long> {
 
-
+    @Query(value = "SELECT * FROM tb_cliente WHERE cpf_cliente = :cpfCliente", nativeQuery = true)
+    public DadosClienteCUD findClienteIdByCpf(String cpfCliente);
 
 
 }
