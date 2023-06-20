@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -62,6 +63,30 @@ public class ContaController {
             }
         return null;
     }
+
+    @PutMapping(value = "/transfer/{cpfOrigem}/{cpfDestino}")
+    public ResponseEntity<List<ContaDTO>> transferir(@PathVariable("cpfOrigem") String cpfOrigem, @PathVariable("cpfDestino") String cpfDestino ,@RequestBody MovimentacaoDto dto) {
+
+        ContaDTO contaOrigem = movimentacaoService.findClienteIdByCpf(cpfOrigem);
+        ContaDTO contaDestino = movimentacaoService.findClienteIdByCpf(cpfDestino);
+
+        if(dto.getAmmount() > 0){
+            contaOrigem.setSaldoConta(contaOrigem.getSaldoConta() - dto.getAmmount());
+            contaDestino.setSaldoConta(contaDestino.getSaldoConta() + dto.getAmmount());
+
+            ContaDTO contaOrigemAtualizada = contaService.updateConta(contaOrigem);
+            ContaDTO contaDestinoAtualizada = contaService.updateConta(contaDestino);
+
+            List<ContaDTO> list = new ArrayList<>();
+            list.add(contaOrigemAtualizada);
+            list.add(contaDestinoAtualizada);
+
+            return ResponseEntity.ok().body(list);
+        }
+
+        return null;
+    }
+
 
     @GetMapping("/admin")
     public ResponseEntity<List<ConsultaGerenteDTO>> telaInicialAdmin(){
