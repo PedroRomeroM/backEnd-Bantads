@@ -7,7 +7,9 @@ import bantadsBack.microConta.dtos.sagaCadastrarCliente.DadosContaDTO;
 import bantadsBack.microConta.models.modelCUD.ContaCUD;
 import bantadsBack.microConta.models.modelCUD.DadosClienteCUD;
 import bantadsBack.microConta.models.modelCUD.DadosGerenteCUD;
+import bantadsBack.microConta.models.modelR.ClienteInicialR;
 import bantadsBack.microConta.models.modelR.ClienteR;
+import bantadsBack.microConta.models.modelR.ClienteSituacaoR;
 import bantadsBack.microConta.models.modelR.ContaR;
 import bantadsBack.microConta.repositoryCUD.ContaRepositoryCUD;
 import bantadsBack.microConta.repositoryCUD.DadosClienteRepository;
@@ -38,6 +40,9 @@ public class ContaService {
 
     @Autowired
     private ClienteConsultaRepositoryR clienteConsultaRepositoryR;
+
+    @Autowired
+    private ClienteInicialRepositoryR clienteInicialRepositoryR;
     @Autowired
     private ContaRepositoryR repositoryR;
 
@@ -58,6 +63,9 @@ public class ContaService {
 
     @Autowired
     private ClienteTopRepositoryR clienteTopRepositoryR;
+
+    @Autowired
+    private ClienteSituacaoRepositoryR clienteSituacaoRepositoryR;
 
     @Autowired
     private ModelMapper mapper;
@@ -116,6 +124,24 @@ public class ContaService {
 
 
         return gerente;
+    }
+
+    public ClienteSituacaoDTO consultarSituacaoConta(String cpf){
+        // consultar o gerente com mais contas e pegar o id
+
+        ClienteSituacaoR situacaoConta = clienteSituacaoRepositoryR.getClientAccountSituation(cpf);
+
+        return mapper.map(situacaoConta, ClienteSituacaoDTO.class);
+    }
+
+    public ClienteInicialDTO consultarClienteInicial(String cpf){
+        // Tela Inicial cliente
+
+        DadosClienteCUD cliente = dadosClienteRepository.findClienteIdByCpf(cpf);
+
+        ClienteInicialR clienteInicial = clienteInicialRepositoryR.inicialCliente(cliente.getClientId());
+
+        return mapper.map(clienteInicial, ClienteInicialDTO.class);
     }
 
     public List<ClienteConsultaDTO> consultarClientesAdmin(){
