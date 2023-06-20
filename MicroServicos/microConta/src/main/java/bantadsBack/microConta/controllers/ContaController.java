@@ -46,7 +46,7 @@ public class ContaController {
                 if(dto.getAmmount() >= 0) {
                     contaDTO.setSaldoConta((contaDTO.getSaldoConta() + dto.getAmmount()));
                 }else {
-                    if(contaDTO.getSaldoConta() > Math.abs(dto.getAmmount())){
+                    if(contaDTO.getSaldoConta() + (contaDTO.getLimiteConta()) >= Math.abs(dto.getAmmount())){
                         contaDTO.setSaldoConta(contaDTO.getSaldoConta() + dto.getAmmount());
                     }else {
                         return new ResponseEntity<>("Saldo Insuficiente", HttpStatus.BAD_REQUEST);
