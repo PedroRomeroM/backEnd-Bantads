@@ -38,6 +38,7 @@ public class GerenteCrudController {
     public ResponseEntity<Object> updateGerente(@PathVariable @NotNull String cpfGerente, @RequestBody GerenteDto dto){
         Integer updated = gerenteService.updateGerente(cpfGerente, dto);
 
+
         return ResponseEntity.ok(updated);
     }
 

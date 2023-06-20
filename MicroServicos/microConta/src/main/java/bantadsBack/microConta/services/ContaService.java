@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 public class ContaService {
 
     @Autowired
-    private ContaRepositoryCUD repositoryCUD;
+    private ContaRepositoryCUD contaRepositoryCUD;
 
     @Autowired
     private GerenteConsultaRepositoryR gerenteRepositoryConsulta;
@@ -62,6 +62,19 @@ public class ContaService {
     @Autowired
     private ModelMapper mapper;
 
+    public List<ContaDTO> selectAllContas() {
+        return contaRepositoryCUD
+                .findAll()
+                .stream()
+                .map(e -> mapper.map(e, ContaDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    public ContaDTO selectContaByIdCliente(Long id) {
+        return mapper.map(contaRepositoryCUD
+                .findByIdCliente(id), ContaDTO.class);
+    }
+
     public ContaDTO criarConta(DadosContaDTO clienteConta) {
 
         ContaCUD novaConta = new ContaCUD();
@@ -73,7 +86,7 @@ public class ContaService {
         novaConta.setDataCriacao(null);
         novaConta.setIdGerente(clienteConta.getIdGerente());
 
-        novaConta = repositoryCUD.save(novaConta);
+        novaConta = contaRepositoryCUD.save(novaConta);
 
         return mapper.map(novaConta, ContaDTO.class);
     }
@@ -162,61 +175,33 @@ public class ContaService {
         return gerenteRepositoryR.substituirGerente(gerente_novo,gerente_antigo);
     }
 
-    public ContaDTO updateConta(Long idConta, @RequestBody ContaDTO dados) throws Exception {
-        ContaR contaParaAtualizar = null;
-
+    public ContaDTO updateConta(ContaDTO dto){
         try {
-            ContaCUD contaAtualizada = repositoryR.findById(idConta).get().toCommand();
-        } catch (NoSuchElementException e) {
-            throw new Exception(e);
-        }
+            ContaCUD contaUpdate = mapper.map(dto, ContaCUD.class);
 
-        contaParaAtualizar.setSaldoConta(dados.getSaldoConta());
-        contaParaAtualizar.setLimiteConta(dados.getLimiteConta());
-        contaParaAtualizar.setIdCliente(dados.getClientId());
-        contaParaAtualizar = repositoryR.save(contaParaAtualizar);
+            contaUpdate = contaRepositoryCUD.save(contaUpdate);
 
-        return mapper.map(contaParaAtualizar, ContaDTO.class);
+            return mapper.map(contaUpdate, ContaDTO.class);
+        }catch(Exception e){}
+        return null;
     }
 
-    public ContaDTO aprovarConta(Long idCliente) {
-        Optional<ContaCUD> conta = repositoryCUD.findByIdCliente(idCliente);
-        if(conta.isPresent()){
-            ContaCUD ct = conta.get();
-            Date dt = Date.from(Instant.now());
-            ct.setSituacaoConta("A");
-            ct.setDataCriacao(dt);
-
-            ContaDTO dto2 = mapper.map(ct, ContaDTO.class);
-
-            return dto2;
-        } else{
-            throw new RuntimeException();
-        }
-    }
-
-    public ClienteContaDTO getById(Long id){
-        Optional<ContaR> conta = repositoryR.findById(Long.valueOf(String.valueOf(id)));
-        if(conta.isPresent());
-            ContaDTO dto = mapper.map(conta.get(), ContaDTO.class);
-
-            ClienteContaDTO dtoInfo = new ClienteContaDTO();
-
-            dtoInfo.setClientId(dto.getClientId());
-            dtoInfo.setIdConta(dto.getIdConta());
-            dtoInfo.setSaldoCliente(dto.getSaldoConta());
+//    public ContaDTO aprovarConta(Long idCliente) {
+//        Optional<ContaCUD> conta = repositoryCUD.findByIdCliente(idCliente);
+//        if(conta.isPresent()){
+//            ContaCUD ct = conta.get();
+//            Date dt = Date.from(Instant.now());
+//            ct.setSituacaoConta("A");
+//            ct.setDataCriacao(dt);
+//
+//            ContaDTO dto2 = mapper.map(ct, ContaDTO.class);
+//
+//            return dto2;
+//        } else{
+//            throw new RuntimeException();
+//        }
+//    }
 
 
-            Optional<ClienteR> cliente = clienteRepositoryR.findById(String.valueOf(dto.getClientId()));
-
-
-            if(cliente.isPresent()){
-                DadosContaDTO dtoCliente = mapper.map(cliente, DadosContaDTO.class);
-                dtoInfo.setCpfCliente(dtoCliente.getCpfCliente());
-                dtoInfo.setNomeCliente(dtoCliente.getNomeCliente());
-            }
-            return dtoInfo;
-
-    }
 
 }

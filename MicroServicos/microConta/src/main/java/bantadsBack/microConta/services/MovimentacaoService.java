@@ -3,9 +3,13 @@ package bantadsBack.microConta.services;
 import bantadsBack.microConta.dtos.sagaCadastrarCliente.ContaDTO;
 import bantadsBack.microConta.dtos.MovimentacoesDTO;
 import bantadsBack.microConta.models.modelCUD.ContaCUD;
+import bantadsBack.microConta.models.modelCUD.DadosClienteCUD;
 import bantadsBack.microConta.models.modelCUD.MovimentacoesCUD;
+import bantadsBack.microConta.models.modelR.ContaR;
 import bantadsBack.microConta.repositoryCUD.ContaRepositoryCUD;
+import bantadsBack.microConta.repositoryCUD.DadosClienteRepository;
 import bantadsBack.microConta.repositoryCUD.MovimentacaoRepositoryCUD;
+import bantadsBack.microConta.repositoryR.ContaRepositoryR;
 import bantadsBack.microConta.repositoryR.MovimentacaoRepositoryR;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,37 +22,29 @@ import java.util.Optional;
 public class MovimentacaoService {
 
     @Autowired
-    private ContaRepositoryCUD repositoryCUD;
+    private ContaRepositoryCUD contaRepositoryCUD;
     @Autowired
     private MovimentacaoRepositoryCUD movimentacaoRepositoryCUD;
     @Autowired
     private MovimentacaoRepositoryR movimentacaoRepositoryR;
 
     @Autowired
+    ContaRepositoryR contaRepositoryR;
+
+    @Autowired
+    DadosClienteRepository dadosClienteRepository;
+
+    @Autowired
     private ModelMapper mapper;
 
+    @Autowired
+    ContaService contaService;
 
-//    public MovimentacoesDTO despositar(Long destinoMovimentacao, BigDecimal valorMovimentacao){
-//        MovimentacoesCUD op = new MovimentacoesCUD();
-//
-//        Optional<ContaCUD> conta = repositoryCUD.findByIdCliente(destinoMovimentacao);
-//
-//        op.setParaCliente(conta.get());
-//        op.setDeCliente(null);
-//        op.setValorMovimentacao(valorMovimentacao);
-//        op.setTipoMovimentacao("D");
-//        op.setDataTempoMovimentacao(null);
-//
-//        op = movimentacaoRepositoryCUD.save(op);
-//
-//        MovimentacoesDTO DTO = mapper.map(op, MovimentacoesDTO.class);
-//
-//        BigDecimal saldo = conta.get().getSaldoConta().add(valorMovimentacao);
-//
-//        updateSaldo(destinoMovimentacao, saldo);
-//
-//        return DTO;
-//    }
+    public ContaDTO findClienteIdByCpf(String cpf){
+        DadosClienteCUD cliente = dadosClienteRepository.findClienteIdByCpf(cpf);
+        ContaDTO conta = contaService.selectContaByIdCliente(cliente.getClientId());
+        return mapper.map(conta,ContaDTO.class);
+    }
 //
 //    public MovimentacoesDTO sacar(Long destinoMovimentacao, Float valorMovimentacao) {
 //
@@ -107,19 +103,6 @@ public class MovimentacaoService {
 //
 //        return dto;
 //    }
-
-
-    public ContaCUD updateSaldo(Long idConta, BigDecimal saldoConta){
-
-        Optional<ContaCUD> conta = repositoryCUD.findByIdCliente(idConta);
-        if (conta.isPresent());
-            ContaCUD ct = conta.get();
-            ct.setSaldoConta(saldoConta);
-            ct = repositoryCUD.save(ct);
-            ContaDTO dto = mapper.map(ct, ContaDTO.class);
-
-            return ct;
-    }
 
 
 }

@@ -26,4 +26,8 @@ public class Auth {
     @NotBlank
     @Size(max = 255)
     private String senha;
+
+    @NotBlank
+    @Size(max = 11)
+    private String cpf;
 }

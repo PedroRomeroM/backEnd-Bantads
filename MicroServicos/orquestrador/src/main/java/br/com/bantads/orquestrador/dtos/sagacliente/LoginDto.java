@@ -14,4 +14,5 @@ public class LoginDto {
     private String nome;
     private String role;
     private String senha;
+    private String cpf;
 }
