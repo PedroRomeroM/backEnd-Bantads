@@ -43,7 +43,7 @@ public class ContaController {
             try{
                 ContaDTO contaDTO = movimentacaoService.findClienteIdByCpf(cpf);
 
-                if(dto.getAmmount() > 0) {
+                if(dto.getAmmount() >= 0) {
                     contaDTO.setSaldoConta((contaDTO.getSaldoConta() + dto.getAmmount()));
                 }else {
                     if(contaDTO.getSaldoConta() > Math.abs(dto.getAmmount())){
@@ -81,6 +81,21 @@ public class ContaController {
     public ResponseEntity<List<ClienteEsperaDTO>> telaInicialManager(){
 
         List<ClienteEsperaDTO> i = contaService.consultarClientesEsperando();
+        return ResponseEntity.status(HttpStatus.OK).body(i);
+    }
+
+    @GetMapping("/cliente/inicial/{cpf}")
+    public ResponseEntity<ClienteInicialDTO> getInitialScreenCliente(@PathVariable("cpf") String cpf){
+
+        ClienteInicialDTO i = contaService.consultarClienteInicial(cpf);
+
+        return ResponseEntity.status(HttpStatus.OK).body(i);
+    }
+
+    @GetMapping("/cliente/situacao/{cpf}")
+    public ResponseEntity<ClienteSituacaoDTO> checkClientSituation(@PathVariable("cpf") String cpf){
+
+        ClienteSituacaoDTO i = contaService.consultarSituacaoConta(cpf);
         return ResponseEntity.status(HttpStatus.OK).body(i);
     }
 
