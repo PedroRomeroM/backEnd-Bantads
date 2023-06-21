@@ -35,4 +35,14 @@ public class ContaListener {
         rabbitTemplate.convertAndSend("fila-orquestrador-conta-criada",rDto);
         System.out.println("cliente criado com o id: "+dto.getClientId());
     }
+
+    @RabbitListener(queues = "atualizar-cliente-conta")
+    public void receberMensagensUpdateCliente(DadosContaDTO dto){
+        //salvar cliente no banco
+        DadosContaDTO cliente = contaService.salvarCliente(dto);
+        ResponseDto rDto = new ResponseDto(SUCESSO);
+        //Enviar mensagem para a fila do orquestrador
+        rabbitTemplate.convertAndSend("fila-orquestrador-conta-criada",rDto);
+        System.out.println("cliente criado com o id: "+dto.getClientId());
+    }
 }

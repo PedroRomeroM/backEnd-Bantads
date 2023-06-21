@@ -78,6 +78,14 @@ public class ContaService {
                 .collect(Collectors.toList());
     }
 
+    public List<ClienteContaDTO> selectAllClientes() {
+        return dadosClienteRepository
+                .findAllClientes()
+                .stream()
+                .map(e -> mapper.map(e, ClienteContaDTO.class))
+                .collect(Collectors.toList());
+    }
+
     public List<GerenteContaDTO> selectAllGerentes() {
         return dadosGerenteRepository
                 .findAll()

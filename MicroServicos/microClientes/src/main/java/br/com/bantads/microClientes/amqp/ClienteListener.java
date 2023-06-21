@@ -28,4 +28,14 @@ public class ClienteListener {
         rabbitTemplate.convertAndSend("fila-orquestrador-cliente-criado",rDto);
         System.out.println("cliente criado com o id: "+clientId);
     }
+
+    @RabbitListener(queues = "update-cliente")
+    public void receberMensagensUpdate(ClienteDto dto){
+        //setar o id
+        ClienteDto selectCliente = clienteService.selectClientByCpf(dto.getCpfCliente());
+        dto.setClientId(selectCliente.getClientId());
+        clienteService.createCliente(dto);
+        //enviar mensagem para a fila do orquestrador
+        rabbitTemplate.convertAndSend("update-cliente-conta",dto);
+    }
 }

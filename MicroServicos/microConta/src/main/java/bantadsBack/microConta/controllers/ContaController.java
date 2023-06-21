@@ -2,6 +2,7 @@ package bantadsBack.microConta.controllers;
 
 
 import bantadsBack.microConta.dtos.*;
+import bantadsBack.microConta.dtos.sagaCadastrarCliente.ClienteContaDTO;
 import bantadsBack.microConta.dtos.sagaCadastrarCliente.ContaDTO;
 import bantadsBack.microConta.repositoryCUD.ContaRepositoryCUD;
 import bantadsBack.microConta.repositoryR.ContaRepositoryR;
@@ -43,6 +44,11 @@ public class ContaController {
     public ResponseEntity<List<GerenteContaDTO>> listAllG(){
 
         return ResponseEntity.status(HttpStatus.OK).body(contaService.selectAllGerentes());
+    }
+    @GetMapping(value="/allclientes")
+    public ResponseEntity<List<ClienteContaDTO>> listAllC(){
+
+        return ResponseEntity.status(HttpStatus.OK).body(contaService.selectAllClientes());
     }
     @PutMapping(value = "/deposit/{cpf}")
     public ResponseEntity<Object> updateSaldo(@PathVariable("cpf") String cpf, @RequestBody MovimentacaoDto dto) {

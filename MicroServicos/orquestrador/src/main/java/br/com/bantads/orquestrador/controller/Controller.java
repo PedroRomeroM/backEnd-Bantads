@@ -6,6 +6,7 @@ import br.com.bantads.orquestrador.dtos.updateGerente.UpdateGerenteDto;
 import br.com.bantads.orquestrador.sagas.excluirGerente.SagaExcluirGerente;
 import br.com.bantads.orquestrador.sagas.autocadastro.SagaAutocadastro;
 import br.com.bantads.orquestrador.sagas.cadastroGerente.SagaInserirGerente;
+import br.com.bantads.orquestrador.sagas.updateCliente.SagaUpdateCliente;
 import br.com.bantads.orquestrador.sagas.updateGerente.SagaAtualizarGerente;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -44,5 +45,10 @@ public class Controller {
         dto.setCpfGerente(cpfGerente);
         SagaAtualizarGerente sagaAtualizarGerente = new SagaAtualizarGerente();
         return sagaAtualizarGerente.start(dto,rabbitTemplate);
+    }
+    @PutMapping("/client/update")
+    public ResponseEntity<Object> updateCliente(@RequestBody ClienteDto dto){
+        SagaUpdateCliente sagaUpdateCliente = new SagaUpdateCliente();
+        return sagaUpdateCliente.start(dto,rabbitTemplate);
     }
 }

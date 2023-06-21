@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ClienteDto {
+    private String clientId;
     private String nomeCliente;
     private String emailCliente;
     private String cpfCliente;

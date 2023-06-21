@@ -56,6 +56,11 @@ public class AMQPConfiguration {
     }
     @Bean
     public Queue criarFilaGerenteAtualizadoGerentes(){ return new Queue("gerente-atualizado-gerentes",false);  }
+
+    @Bean
+    public Queue criarFilaUpdateClienteConta(){
+        return new Queue("update-cliente-conta",false);
+    }
     @Bean
     public Queue criarFilaCriarConta(){
         return new Queue("criar-conta",false);
@@ -63,6 +68,14 @@ public class AMQPConfiguration {
     @Bean
     public Queue criarFilaUpdateGerente(){
         return new Queue("update-gerente",false);
+    }
+    @Bean
+    public Queue criarFilaUpdateTbContaCliente(){
+        return new Queue("atualizar-cliente-conta",false);
+    }
+    @Bean
+    public Queue criarFilaUpdateCliente(){
+        return new Queue("update-cliente",false);
     }
     @Bean
     public Queue criarFilaOrquestradorCliente(){
