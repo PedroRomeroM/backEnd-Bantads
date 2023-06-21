@@ -1,10 +1,11 @@
-package bantadsBackEnd.microAuth.utils;
+package br.com.bantads.orquestrador.utils;
 
 import jakarta.mail.Transport;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.util.Properties;
 
 @Getter
@@ -32,7 +33,7 @@ public class EnviarEmail {
         prop.setProperty("mail.smtp.starttls.enable", "true");
         prop.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
         prop.put("mail.smtp.starttls.enable", "true");
-        
+
         jakarta.mail.Session session = jakarta.mail.Session.getInstance(prop,
                 new jakarta.mail.Authenticator() {
                     @Override
@@ -49,9 +50,8 @@ public class EnviarEmail {
                     jakarta.mail.internet.InternetAddress.parse(emailDestinatario)
             );
             
-            message.setSubject("Login e senha Bantads");
-            message.setText("Olá " + nomeDestinatario + "!\n\nSegue abaixo seu login e senha para acesso ao nosso sistema:\n\nLogin: " + emailDestinatario 
-                    + "\nSenha: " + senhaDestinatario + "\n\nConfirme seus dados:\n");
+            message.setSubject("Falha interna durante transação");
+            message.setText("Olá " + nomeDestinatario + "!\n\nUma falha interna ocoreu durante sua transação, solicitação não efetuada! Por favor, tente novamente.");
             Transport transport = session.getTransport("smtp");
             transport.connect();
             jakarta.mail.Transport.send(message);

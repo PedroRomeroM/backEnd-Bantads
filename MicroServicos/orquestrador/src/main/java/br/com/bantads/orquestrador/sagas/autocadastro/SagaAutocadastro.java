@@ -2,6 +2,7 @@ package br.com.bantads.orquestrador.sagas.autocadastro;
 
 import br.com.bantads.orquestrador.dtos.sagacliente.ClienteDto;
 import br.com.bantads.orquestrador.sagas.validacoes.Validacoes;
+import br.com.bantads.orquestrador.utils.EnviarEmail;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +18,21 @@ public class SagaAutocadastro {
                 rabbitTemplate.convertAndSend("criar-cliente",dto);
                 System.out.println("criou o cliente "+ dto.getCpfCliente());
 
-                return new ResponseEntity<>("Solicitacao de cadasro realizada com sucesso!", HttpStatus.CREATED);
+                return new ResponseEntity<>("Solicitacao de cadastro realizada com sucesso!", HttpStatus.CREATED);
             }else {
                 //Caso CPF invalido
+                EnviarEmail enviarEmail = new EnviarEmail();
+                enviarEmail.setNomeDestinatario(dto.getNomeCliente());
+
+                enviarEmail.enviarGmail();
                 return new ResponseEntity("CPF Invalido", HttpStatus.BAD_REQUEST);
             }
         }
         //Caso algum campo seja nullo
+        EnviarEmail enviarEmail = new EnviarEmail();
+        enviarEmail.setNomeDestinatario(dto.getNomeCliente());
+
+        enviarEmail.enviarGmail();
         return new ResponseEntity<>("Dados do cliente invalidos", HttpStatus.BAD_REQUEST);
     }
 
