@@ -24,7 +24,7 @@ CREATE TABLE tb_conta(
     situacao_conta CHAR(1),
     saldo_conta NUMERIC,
     data_conta DATE,
-    id_cliente_conta INTEGER,
+    id_cliente_conta INTEGER UNIQUE,
     id_gerente_conta INTEGER,
 
     CONSTRAINT pk_conta PRIMARY KEY (id_conta),

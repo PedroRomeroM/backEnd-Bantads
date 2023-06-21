@@ -1,9 +1,6 @@
 package br.com.bantads.orquestrador.sagas.updateCliente;
 
 import br.com.bantads.orquestrador.dtos.sagacliente.ClienteDto;
-import br.com.bantads.orquestrador.dtos.sagainserirgerente.GerenteResponseDto;
-import br.com.bantads.orquestrador.dtos.sagainserirgerente.LoginGerenteDto;
-import br.com.bantads.orquestrador.dtos.sagainserirgerente.Status;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -34,6 +34,7 @@ public class ClienteListener {
         //setar o id
         ClienteDto selectCliente = clienteService.selectClientByCpf(dto.getCpfCliente());
         dto.setClientId(selectCliente.getClientId());
+
         clienteService.createCliente(dto);
         //enviar mensagem para a fila do orquestrador
         rabbitTemplate.convertAndSend("update-cliente-conta",dto);

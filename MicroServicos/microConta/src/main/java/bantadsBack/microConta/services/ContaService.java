@@ -239,6 +239,9 @@ public class ContaService {
         }catch(Exception e){}
         return null;
     }
+    public ContaDTO getContaFromClientId(Long id){
+       return mapper.map(contaRepositoryCUD.getContaByClientId(id),ContaDTO.class);
+    }
 
 //    public ContaDTO aprovarConta(Long idCliente) {
 //        Optional<ContaCUD> conta = repositoryCUD.findByIdCliente(idCliente);
