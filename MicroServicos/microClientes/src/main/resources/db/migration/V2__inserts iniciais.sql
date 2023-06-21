@@ -1,0 +1,2 @@
+INSERT INTO clientes (client_id, nome_cliente, email_cliente, cpf_cliente, telefone_cliente, salario_cliente, tipo_endereco_cliente, logradouro_cliente, numero_residencia_cliente, complemento_residencia_cliente, cep_cliente, cidade_cliente, estado_cliente)
+VALUES (1, 'João Silva', 'joao.silva@example.com', '12345678901', '1112345678', 5000.00, 'Residencial', 'Rua das Flores', '123', 'Apto 1', '01234567', 'São Paulo', 'SP');
