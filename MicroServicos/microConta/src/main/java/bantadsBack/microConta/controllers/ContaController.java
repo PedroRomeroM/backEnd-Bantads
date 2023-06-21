@@ -93,6 +93,21 @@ public class ContaController {
         return null;
     }
 
+    @PutMapping(value = "/aprovar/{cpf}")
+    public ResponseEntity<Object> aprovarConta(@PathVariable("cpf") String cpf) {
+
+        try {
+            ContaDTO contaAprovada = movimentacaoService.findClienteIdByCpf(cpf);
+            contaAprovada.setSituacaoConta("A");
+
+            ContaDTO conta = contaService.updateConta(contaAprovada);
+             return ResponseEntity.ok().body(conta);
+        } catch (Exception e){
+            return new ResponseEntity<Object>("Erro ao aprovar o cliente",HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
 
     @GetMapping("/admin")
     public ResponseEntity<List<ConsultaGerenteDTO>> telaInicialAdmin(){
