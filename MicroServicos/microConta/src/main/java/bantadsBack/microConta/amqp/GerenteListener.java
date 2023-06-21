@@ -56,4 +56,9 @@ public class GerenteListener {
         contaService.transferirContaAoExcluirGerente(dto.getId().longValue(),idGerenteMenosContas);
         //sdkolgflksdfg
     }
+
+    @RabbitListener(queues = "atualizar-gerente-contas")
+    public void receberMensagensExcluirGerente(SalvarNovoGerenteDto dto){
+        contaService.updateGerente(dto);
+    }
 }

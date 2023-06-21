@@ -2,9 +2,11 @@ package br.com.bantads.orquestrador.controller;
 
 import br.com.bantads.orquestrador.dtos.sagacliente.ClienteDto;
 import br.com.bantads.orquestrador.dtos.sagainserirgerente.GerenteDto;
+import br.com.bantads.orquestrador.dtos.updateGerente.UpdateGerenteDto;
 import br.com.bantads.orquestrador.sagas.excluirGerente.SagaExcluirGerente;
 import br.com.bantads.orquestrador.sagas.autocadastro.SagaAutocadastro;
 import br.com.bantads.orquestrador.sagas.cadastroGerente.SagaInserirGerente;
+import br.com.bantads.orquestrador.sagas.updateGerente.SagaAtualizarGerente;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -35,5 +37,12 @@ public class Controller {
     public ResponseEntity<Object> deleteCliente(@PathVariable @NotNull String cpf) {
         SagaExcluirGerente sagaExcluirGerente = new SagaExcluirGerente();
         return sagaExcluirGerente.start(cpf,rabbitTemplate);
+    }
+
+    @PutMapping("/manager/{cpfGerente}")
+    public ResponseEntity<Object> updateGerente(@PathVariable @NotNull String cpfGerente, @RequestBody UpdateGerenteDto dto){
+        dto.setCpfGerente(cpfGerente);
+        SagaAtualizarGerente sagaAtualizarGerente = new SagaAtualizarGerente();
+        return sagaAtualizarGerente.start(dto,rabbitTemplate);
     }
 }

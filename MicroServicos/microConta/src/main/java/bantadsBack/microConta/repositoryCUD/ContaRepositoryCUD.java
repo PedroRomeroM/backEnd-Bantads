@@ -18,5 +18,6 @@ public interface ContaRepositoryCUD extends JpaRepository<ContaCUD, Long> {
     public Optional<ContaCUD> findByIdCliente(Long id);
 
     public List<ContaCUD> findByIdGerente(Long id);
-
+    @Query(value = "SELECT id_gerente FROM tb_gerente WHERE cpf_gerente = :cpfGerente", nativeQuery = true)
+    Long getGerenteIdByCpf(String cpfGerente);
 }

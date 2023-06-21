@@ -52,9 +52,11 @@ public class GerenteService {
     public Integer updateGerente(String cpfGerente, GerenteDto dto) {
 
         Integer gerenteId = gerenteRepository.getGerenteId(cpfGerente);
-        Integer update = gerenteRepository.updateGerente(dto.getNomeGerente(),dto.getTelefoneGerente(), dto.getEmailGerente(), Long.valueOf(gerenteId));
+        Gerente gerente = modelMapperGerente.map(dto,Gerente.class);
+        gerente.setGerenteId(gerenteId);
+        gerenteRepository.save(gerente);
 
-        return update;
+        return gerenteId;
     }
 
     public GerenteEditarDTO passarInfoEditarGerente(String cpf){

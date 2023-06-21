@@ -1,6 +1,7 @@
 package bantadsbackend.microGerentes.amqp;
 
 
+import bantadsbackend.microGerentes.controller.GerenteCrudController;
 import bantadsbackend.microGerentes.dto.*;
 import bantadsbackend.microGerentes.service.GerenteService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -18,6 +19,9 @@ public class GerenteListener {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    @Autowired
+    GerenteCrudController gerenteCrudController = new GerenteCrudController();
+
     @RabbitListener(queues = "criar-gerente")
     public void receberMensagens(GerenteDto dto){
         //salvar gerente no banco
@@ -33,5 +37,20 @@ public class GerenteListener {
 
         //enviar mensagem para a fila do orquestrador
         rabbitTemplate.convertAndSend("gerente-excluido",status);
+    }
+
+    @RabbitListener(queues = "update-gerente")
+    public void receberMensagensUpdateGerente(GerenteDto dto){
+        EResponseDto status = new EResponseDto();
+        try {
+            gerenteCrudController.updateGerente(dto);
+            //enviar mensagem para a fila do orquestrador
+            dto.setStatus("SUCESSO");
+            rabbitTemplate.convertAndSend("gerente-atualizado-gerentes", dto);
+
+        }catch (Exception e){
+            dto.setStatus("ERRO");
+            rabbitTemplate.convertAndSend("gerente-atualizado-gerentes", dto);
+        }
     }
 }

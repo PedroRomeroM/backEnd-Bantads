@@ -33,10 +33,16 @@ public class ContaController {
     @Autowired
     private ContaRepositoryCUD contaRepositoryCUD;
 
-    @GetMapping
+    @GetMapping(value="/allcontas")
     public ResponseEntity<List<ContaDTO>> listAll(){
 
         return ResponseEntity.status(HttpStatus.OK).body(contaService.selectAllContas());
+    }
+
+    @GetMapping(value="/allgerentes")
+    public ResponseEntity<List<GerenteContaDTO>> listAllG(){
+
+        return ResponseEntity.status(HttpStatus.OK).body(contaService.selectAllGerentes());
     }
     @PutMapping(value = "/deposit/{cpf}")
     public ResponseEntity<Object> updateSaldo(@PathVariable("cpf") String cpf, @RequestBody MovimentacaoDto dto) {

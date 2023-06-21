@@ -78,6 +78,14 @@ public class ContaService {
                 .collect(Collectors.toList());
     }
 
+    public List<GerenteContaDTO> selectAllGerentes() {
+        return dadosGerenteRepository
+                .findAll()
+                .stream()
+                .map(e -> mapper.map(e, GerenteContaDTO.class))
+                .collect(Collectors.toList());
+    }
+
     public ContaDTO selectContaByIdCliente(Long id) {
         return mapper.map(contaRepositoryCUD
                 .findByIdCliente(id), ContaDTO.class);
@@ -208,6 +216,18 @@ public class ContaService {
             contaUpdate = contaRepositoryCUD.save(contaUpdate);
 
             return mapper.map(contaUpdate, ContaDTO.class);
+        }catch(Exception e){}
+        return null;
+    }
+
+    public SalvarNovoGerenteDto updateGerente(SalvarNovoGerenteDto dto){
+        try {
+            Long id = contaRepositoryCUD.getGerenteIdByCpf(dto.getCpfGerente());
+            DadosGerenteCUD dadosGerenteCUD = new DadosGerenteCUD(id,dto.getNomeGerente(), dto.getCpfGerente());
+
+             DadosGerenteCUD cud = dadosGerenteRepository.save(dadosGerenteCUD);
+
+            return dto;
         }catch(Exception e){}
         return null;
     }

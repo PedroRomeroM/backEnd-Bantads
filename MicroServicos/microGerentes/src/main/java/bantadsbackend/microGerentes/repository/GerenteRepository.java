@@ -18,10 +18,9 @@ public interface GerenteRepository extends JpaRepository<Gerente, Integer> {
     Integer getGerenteId(@Param("cpf") String cpf);
 
 
-    @Transactional
-    @Modifying
-    @Query("UPDATE Gerente SET nomeGerente = :novoNome, emailGerente = :novoEmail, telefoneGerente = :novoTelefone WHERE gerenteId = :gerenteId")
-    int updateGerente(@Param("novoNome") String novoNome, @Param("novoEmail") String novoEmail, @Param("novoTelefone") String novoTelefone, @Param("gerenteId") Long gerenteId);
-
+//    @Transactional
+//    @Modifying
+//    @Query(value = "UPDATE gerentes SET nome_gerente = :novoNome, email_gerente = :novoEmail, telefone_gerente = :novoTelefone WHERE gerente_id = :gerenteId",nativeQuery = true)
+//    int updateGerente(@Param("novoNome") String novoNome, @Param("novoEmail") String novoEmail, @Param("novoTelefone") String novoTelefone, @Param("gerenteId") Long gerenteId);
 
 }
