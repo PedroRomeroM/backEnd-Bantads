@@ -12,14 +12,11 @@ import java.util.List;
 
 public interface ExtratoRepository extends JpaRepository<MovimentacoesCUD, ExtratoDto> {
 
-    @Query(value = "SELECT * FROM tb_movimentacoes m " +
-            "INNER JOIN tb_conta co ON m.origem = co.id_conta " +
-            "INNER JOIN tb_conta cd ON m.destino = cd.id_conta " +
-            "WHERE m.cliente = :clienteId " +
-            "AND m.data >= :dataInicio " +
-            "AND m.data <= :dataFim", nativeQuery = true)
-    public List<ExtratoDto> getExtrato(@Param("clienteId") Long clienteId, @Param("dataInicio") Date dataInicio, @Param("dataFim") Date dataFim);
-
-
+    @Query(value = "SELECT * FROM tb_movimentacoes " +
+            "WHERE (cliente = :clienteId OR destino IN (SELECT id_conta FROM tb_conta WHERE id_cliente_conta = :clienteId)) " +
+            "AND data >= :dataInicio " +
+            "AND data <= :dataFim ",
+            nativeQuery = true)
+    public List<MovimentacoesCUD> getExtrato(@Param("clienteId") Long clienteId, @Param("dataInicio") Date dataInicio, @Param("dataFim") Date dataFim);
 
 }

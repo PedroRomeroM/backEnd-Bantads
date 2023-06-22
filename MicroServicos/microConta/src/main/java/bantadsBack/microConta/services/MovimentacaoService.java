@@ -70,8 +70,11 @@ public class MovimentacaoService {
     }
 
     public List<ExtratoDto> selectExtrato(DataFilterDto dto){
+
         DadosClienteCUD cud = dadosClienteRepository.findClienteIdByCpf(dto.getCpf());
-        return extratoRepository.getExtrato(cud.getClientId(),dto.getDataInicio(),dto.getDataFim());
+        List<MovimentacoesCUD> retorno = extratoRepository.getExtrato(cud.getClientId(),dto.getDataInicio(),dto.getDataFim());
+        retorno.stream().map(e -> mapper.map(e, ExtratoDto.class)).collect(Collectors.toList());
+        return retorno.stream().map(e -> mapper.map(e, ExtratoDto.class)).collect(Collectors.toList());
     }
 
 }
