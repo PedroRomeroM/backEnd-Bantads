@@ -5,6 +5,7 @@ CREATE TABLE tb_cliente(
     salario_cliente NUMERIC,
     cidade_cliente varchar(50),
     estado_cliente varchar(2),
+    email_cliente varchar(255),
 
 
     CONSTRAINT pk_cliente PRIMARY KEY (client_id)

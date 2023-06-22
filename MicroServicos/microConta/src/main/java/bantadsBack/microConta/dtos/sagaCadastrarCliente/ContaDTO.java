@@ -21,4 +21,5 @@ public class ContaDTO {
     private Date dataCriacaoConta;
     private String nomeGerente;
     private Long idGerente;
+    private String emailCliente;
 }

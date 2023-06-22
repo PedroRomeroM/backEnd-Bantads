@@ -45,6 +45,7 @@ public class ContaCUD {
     @Column(name = "id_gerente_conta", nullable = false)
     private Long idGerente;
 
+
     public ContaCUD toQuery(){
         ModelMapper mapper = new ModelMapper();
         return mapper.map(this, ContaCUD.class);
