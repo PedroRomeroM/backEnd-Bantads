@@ -35,11 +35,15 @@ public class ContaController {
     private ContaRepositoryCUD contaRepositoryCUD;
 
     @GetMapping(value="/allcontas")
-    public ResponseEntity<List<ContaDTO>> listAll(){
+    public ResponseEntity<List<ContaDTO>> listAll() {
 
         return ResponseEntity.status(HttpStatus.OK).body(contaService.selectAllContas());
     }
 
+    @GetMapping(value="/extratos")
+    public ResponseEntity<List<ExtratoDto>> listAllExtratos(){
+        return ResponseEntity.status(HttpStatus.OK).body(movimentacaoService.selectAllExtratos());
+    }
     @GetMapping(value="/allgerentes")
     public ResponseEntity<List<GerenteContaDTO>> listAllG(){
 
@@ -58,9 +62,33 @@ public class ContaController {
 
                 if(dto.getAmmount() >= 0) {
                     contaDTO.setSaldoConta((contaDTO.getSaldoConta() + dto.getAmmount()));
+                    //inserir deposito no extrato
+                    //dto do extrato
+                    ExtratoDto dtoExtrato = new ExtratoDto();
+
+                    //setando o dto do extrato
+                    dtoExtrato.setTipo("Deposito");
+                    dtoExtrato.setCliente(contaDTO.getIdCliente());
+                    dtoExtrato.setValor(dto.getAmmount());
+
+                    //salvar na tabela de extrato
+                    movimentacaoService.registrarDeposito(dtoExtrato);
+
                 }else {
                     if(contaDTO.getSaldoConta() + (contaDTO.getLimiteConta()) >= Math.abs(dto.getAmmount())){
                         contaDTO.setSaldoConta(contaDTO.getSaldoConta() + dto.getAmmount());
+                        //inserir saque no extrato
+                        //dto do extrato
+                        ExtratoDto dtoExtrato = new ExtratoDto();
+
+                        //setando o dto do extrato
+                        dtoExtrato.setTipo("Saque");
+                        dtoExtrato.setCliente(contaDTO.getIdCliente());
+                        dtoExtrato.setValor(dto.getAmmount());
+
+                        //salvar na tabela de extrato
+                        movimentacaoService.registrarSaque(dtoExtrato);
+
                     }else {
                         return new ResponseEntity<>("Saldo Insuficiente", HttpStatus.BAD_REQUEST);
                     }
@@ -92,6 +120,19 @@ public class ContaController {
             List<ContaDTO> list = new ArrayList<>();
             list.add(contaOrigemAtualizada);
             list.add(contaDestinoAtualizada);
+
+            //dto do extrato
+            ExtratoDto dtoExtrato = new ExtratoDto();
+
+            //setando o dto do extrato
+            dtoExtrato.setTipo("Transferencia");
+            dtoExtrato.setCliente(contaOrigem.getIdCliente());
+            dtoExtrato.setOrigem(contaOrigem.getIdConta());
+            dtoExtrato.setDestino(contaDestino.getIdConta());
+            dtoExtrato.setValor(dto.getAmmount());
+
+            //salvar na tabela de extrato
+            movimentacaoService.registrarTransferencia(dtoExtrato);
 
             return ResponseEntity.ok().body(list);
         }

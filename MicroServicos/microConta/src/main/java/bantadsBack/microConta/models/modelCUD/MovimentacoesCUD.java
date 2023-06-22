@@ -20,24 +20,26 @@ import java.util.Date;
 public class MovimentacoesCUD {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long idMovimentacao;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @CreationTimestamp
-    @Column(name = "data_tempo")
-    private Date dataTempoMovimentacao;
+    @Column(name = "data")
+    private Date data;
 
-    private BigDecimal valorMovimentacao;
+    @Column(name = "tipo")
+    private String tipo;
 
-    @Column(columnDefinition="CHAR(1)")
-    private String tipoMovimentacao;
+    @Column(name="cliente")
+    private Long cliente;
 
-    @ManyToOne
-    @JoinColumn(name = "de_cliente")
-    private ContaCUD deCliente;
+    @Column(name="origem")
+    private Long origem;
 
-    @ManyToOne
-    @JoinColumn(name = "para_cliente")
-    private ContaCUD paraCliente;
+    @Column(name="destino")
+    private Long destino;
+
+    @Column(name="valor")
+    private BigDecimal valor;
 
 }
