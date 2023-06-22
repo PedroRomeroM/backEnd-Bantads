@@ -47,6 +47,13 @@ public class ContaController {
     public ResponseEntity<List<ExtratoDto>> listAllExtratos(){
         return ResponseEntity.status(HttpStatus.OK).body(movimentacaoService.selectAllExtratos());
     }
+
+    @GetMapping(value="/extratos/{cpf}")
+    public ResponseEntity<List<ExtratoDto>> extratoConta(@PathVariable("cpf") String cpf, @RequestBody DataFilterDto dto){
+        dto.setCpf(cpf);
+        return ResponseEntity.status(HttpStatus.OK).body(movimentacaoService.selectExtrato(dto));
+    }
+
     @GetMapping(value="/allgerentes")
     public ResponseEntity<List<GerenteContaDTO>> listAllG(){
 

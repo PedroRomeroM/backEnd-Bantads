@@ -1,5 +1,6 @@
 package bantadsBack.microConta.services;
 
+import bantadsBack.microConta.dtos.DataFilterDto;
 import bantadsBack.microConta.dtos.ExtratoDto;
 import bantadsBack.microConta.dtos.sagaCadastrarCliente.ContaDTO;
 import bantadsBack.microConta.models.modelCUD.DadosClienteCUD;
@@ -66,6 +67,11 @@ public class MovimentacaoService {
                 .stream()
                 .map(e -> mapper.map(e, ExtratoDto.class))
                 .collect(Collectors.toList());
+    }
+
+    public List<ExtratoDto> selectExtrato(DataFilterDto dto){
+        DadosClienteCUD cud = dadosClienteRepository.findClienteIdByCpf(dto.getCpf());
+        return extratoRepository.getExtrato(cud.getClientId(),dto.getDataInicio(),dto.getDataFim());
     }
 
 }
