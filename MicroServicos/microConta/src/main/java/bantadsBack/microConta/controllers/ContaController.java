@@ -167,6 +167,8 @@ public class ContaController {
 
             ClienteReprovarEmailDTO dto = contaService.pegarEmailNomeCliente(cpf);
 
+            ContaDTO conta = contaService.updateConta(contaReprovada);
+
             try{
                 enviarEmail.setEmailDestinatario(dto.getEmailCliente());
                 enviarEmail.setNomeDestinatario(dto.getNomeCliente());
@@ -176,7 +178,7 @@ public class ContaController {
                 return new ResponseEntity<Object>("Erro ao enviar email!",HttpStatus.BAD_REQUEST);
             }
 
-            ContaDTO conta = contaService.updateConta(contaReprovada);
+
 
             return ResponseEntity.ok().body(conta);
         } catch (Exception e){

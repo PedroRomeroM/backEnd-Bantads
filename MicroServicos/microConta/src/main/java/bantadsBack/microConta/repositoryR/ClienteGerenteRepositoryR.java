@@ -14,8 +14,9 @@ public interface ClienteGerenteRepositoryR extends JpaRepository<ClienteGerenteR
             "FROM tb_cliente c " +
             "INNER JOIN tb_conta ct ON ct.id_cliente_conta = c.client_id " +
             "INNER JOIN tb_gerente g ON g.id_gerente = ct.id_gerente_conta " +
-            "WHERE g.cpf_gerente = :cpfGerente", nativeQuery = true)
+            "WHERE g.cpf_gerente = :cpfGerente AND ct.situacao_conta = 'A'", nativeQuery = true)
     public List<ClienteGerenteR> clientesDesseGerente(@Param("cpfGerente") String cpfGerente);
+
 
 
 
