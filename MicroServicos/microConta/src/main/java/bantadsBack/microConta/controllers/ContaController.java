@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -48,10 +49,14 @@ public class ContaController {
         return ResponseEntity.status(HttpStatus.OK).body(movimentacaoService.selectAllExtratos());
     }
 
-    @GetMapping(value="/extratos/{cpf}")
-    public ResponseEntity<List<ExtratoDto>> extratoConta(@PathVariable("cpf") String cpf, @RequestBody DataFilterDto dto){
-        dto.setCpf(cpf);
-        return ResponseEntity.status(HttpStatus.OK).body(movimentacaoService.selectExtrato(dto));
+    @GetMapping(value="/extratos/{cpf}/{dataInicio}/{dataFim}")
+    public ResponseEntity<List<ExtratoDto>> extratoConta(@PathVariable("cpf") String cpf, @PathVariable("dataInicio") String dataInicio,  @PathVariable("dataFim") String dataFim) throws ParseException {
+
+        DataFilterDto dto = new DataFilterDto(dataInicio, dataFim, cpf);
+
+        List<ExtratoDto> list = movimentacaoService.selectExtrato(dto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
     @GetMapping(value="/allgerentes")
