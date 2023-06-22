@@ -39,4 +39,7 @@ public class DadosClienteCUD {
     @Size(min = 2,max = 2)
     private String estadoCliente;
 
+    @Column(name="email_cliente")
+    private String emailCliente;
+
 }
