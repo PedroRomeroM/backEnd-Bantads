@@ -13,4 +13,5 @@ public class DadosContaDTO {
     private Long idGerente;
     private String cidadeCliente;
     private String estadoCliente;
+    private String emailCliente;
 }
