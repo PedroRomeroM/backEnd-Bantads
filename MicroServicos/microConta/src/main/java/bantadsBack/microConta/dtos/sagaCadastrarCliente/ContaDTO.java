@@ -16,7 +16,7 @@ public class ContaDTO {
     private Long idConta;
     private float saldoConta;
     private float limiteConta;
-    private Long idCliente; //todo
+    private Long idCliente;
     private String situacaoConta;
     private Date dataCriacaoConta;
     private String nomeGerente;

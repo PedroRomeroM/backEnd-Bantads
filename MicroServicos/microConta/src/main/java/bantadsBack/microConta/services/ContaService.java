@@ -7,10 +7,7 @@ import bantadsBack.microConta.dtos.sagaCadastrarCliente.DadosContaDTO;
 import bantadsBack.microConta.models.modelCUD.ContaCUD;
 import bantadsBack.microConta.models.modelCUD.DadosClienteCUD;
 import bantadsBack.microConta.models.modelCUD.DadosGerenteCUD;
-import bantadsBack.microConta.models.modelR.ClienteInicialR;
-import bantadsBack.microConta.models.modelR.ClienteR;
-import bantadsBack.microConta.models.modelR.ClienteSituacaoR;
-import bantadsBack.microConta.models.modelR.ContaR;
+import bantadsBack.microConta.models.modelR.*;
 import bantadsBack.microConta.repositoryCUD.ContaRepositoryCUD;
 import bantadsBack.microConta.repositoryCUD.DadosClienteRepository;
 import bantadsBack.microConta.repositoryCUD.DadosGerenteRepository;
@@ -66,6 +63,12 @@ public class ContaService {
 
     @Autowired
     private ClienteSituacaoRepositoryR clienteSituacaoRepositoryR;
+
+    @Autowired
+    private ClienteGerenteRepositoryR clienteGerenteRepositoryR;
+
+    @Autowired
+    private ClienteReprovarEmailRepositoryR clienteReprovarEmailRepositoryR;
 
     @Autowired
     private ModelMapper mapper;
@@ -148,6 +151,23 @@ public class ContaService {
         ClienteSituacaoR situacaoConta = clienteSituacaoRepositoryR.getClientAccountSituation(cpf);
 
         return mapper.map(situacaoConta, ClienteSituacaoDTO.class);
+    }
+
+    public ClienteReprovarEmailDTO pegarEmailNomeCliente(String cpf){
+        // Pegar email e nome do cliente para mandar email de reprovacao de conta
+
+        ClienteReprovarEmailR cliente = clienteReprovarEmailRepositoryR.getEmailNomeCliente(cpf);
+
+        return mapper.map(cliente, ClienteReprovarEmailDTO.class);
+    }
+
+    public List<ClienteGerenteDTO> clientesMesmoGerente(String cpf){
+        // Tela todos clientes mesmo gerente
+        return clienteGerenteRepositoryR
+                .clientesDesseGerente(cpf)
+                .stream()
+                .map(e -> mapper.map(e, ClienteGerenteDTO.class))
+                .collect(Collectors.toList());
     }
 
     public ClienteInicialDTO consultarClienteInicial(String cpf){

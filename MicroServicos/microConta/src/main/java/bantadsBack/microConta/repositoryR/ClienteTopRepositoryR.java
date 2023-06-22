@@ -13,6 +13,7 @@ public interface ClienteTopRepositoryR extends JpaRepository<ClienteTopR, Long> 
             "FROM tb_cliente c " +
             "INNER JOIN tb_conta co ON c.client_id = co.id_cliente_conta " +
             "INNER JOIN tb_gerente g ON co.id_gerente_conta = g.id_gerente " +
+            "WHERE co.situacao_conta = 'A' " +
             "ORDER BY co.saldo_conta DESC " +
             "LIMIT 3", nativeQuery = true)
     public List<ClienteTopR> topClientes();

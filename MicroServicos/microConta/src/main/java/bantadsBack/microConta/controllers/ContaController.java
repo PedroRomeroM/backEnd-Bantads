@@ -8,6 +8,7 @@ import bantadsBack.microConta.repositoryCUD.ContaRepositoryCUD;
 import bantadsBack.microConta.repositoryR.ContaRepositoryR;
 import bantadsBack.microConta.services.ContaService;
 import bantadsBack.microConta.services.MovimentacaoService;
+import bantadsBack.microConta.utils.EnviarEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,8 @@ import java.util.NoSuchElementException;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/conta")
 public class ContaController {
+
+    private EnviarEmail enviarEmail = new EnviarEmail();
 
     @Autowired
     private MovimentacaoService movimentacaoService;
@@ -114,6 +117,33 @@ public class ContaController {
 
     }
 
+    @PutMapping(value = "/reprovar/{cpf}")
+    public ResponseEntity<Object> reprovarConta(@PathVariable("cpf") String cpf) {
+
+        try {
+            ContaDTO contaReprovada = movimentacaoService.findClienteIdByCpf(cpf);
+            contaReprovada.setSituacaoConta("R");
+
+            ClienteReprovarEmailDTO dto = contaService.pegarEmailNomeCliente(cpf);
+
+            try{
+                enviarEmail.setEmailDestinatario(dto.getEmailCliente());
+                enviarEmail.setNomeDestinatario(dto.getNomeCliente());
+                enviarEmail.enviarGmail();
+
+            }catch (Exception e){
+                return new ResponseEntity<Object>("Erro ao enviar email!",HttpStatus.BAD_REQUEST);
+            }
+
+            ContaDTO conta = contaService.updateConta(contaReprovada);
+
+            return ResponseEntity.ok().body(conta);
+        } catch (Exception e){
+            return new ResponseEntity<Object>("Erro ao reprovar o cliente",HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
 
     @GetMapping("/admin")
     public ResponseEntity<List<ConsultaGerenteDTO>> telaInicialAdmin(){
@@ -148,6 +178,14 @@ public class ContaController {
     public ResponseEntity<ClienteSituacaoDTO> checkClientSituation(@PathVariable("cpf") String cpf){
 
         ClienteSituacaoDTO i = contaService.consultarSituacaoConta(cpf);
+        return ResponseEntity.status(HttpStatus.OK).body(i);
+    }
+
+    @GetMapping("/manager/{cpf}/clientes")
+    public ResponseEntity<List<ClienteGerenteDTO>> telaTopClientsManager(@PathVariable("cpf") String cpf){
+
+        List<ClienteGerenteDTO> i = contaService.clientesMesmoGerente(cpf);
+
         return ResponseEntity.status(HttpStatus.OK).body(i);
     }
 
